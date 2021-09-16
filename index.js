@@ -14,6 +14,7 @@ app.use(body_parser.urlencoded({extended:false}));
 app.use(body_parser.json());
 //static routes
 app.use('/jquery', express.static('./node_modules/jquery/dist/jquery.js'));
+app.use('/shader', express.static('./shadertext/'));
 app.use('/public', express.static('./public'));
 //
 routing(app);
