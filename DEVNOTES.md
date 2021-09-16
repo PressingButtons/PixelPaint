@@ -13,3 +13,13 @@ I'm also trying to figure out a method to allow undo's/tracking of actions perfo
 Unlike context2D, there doesn't seem to be a function that would gather bitmapdata.
 Possible alternatives can include logging every action and refilling the buffer with those values to recreate the image.
 Still investigating.
+
+###Noted hurdle
+
+Trying to create consistent brush strokes leads to an interesting dilemma via webGL.
+Currently users can create a 1 pixel wide brush stroke, from what I gather there are two routes to take.
+
+1. Construct line segements as triangles, possibly round out the end points based on the angle between.
+2. Create a brush "texture" and draw that texture in between two points enough times that there is continuous overlap.
+
+There's a bit of a draw to option 2 as if the system work, custom brushes could be implemented. 
