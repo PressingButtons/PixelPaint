@@ -22,4 +22,12 @@ Currently users can create a 1 pixel wide brush stroke, from what I gather there
 1. Construct line segements as triangles, possibly round out the end points based on the angle between.
 2. Create a brush "texture" and draw that texture in between two points enough times that there is continuous overlap.
 
-There's a bit of a draw to option 2 as if the system work, custom brushes could be implemented. 
+There's a bit of a draw to option 2 as if the system work, custom brushes could be implemented.
+
+#9/18/2021
+
+##Brush updates
+
+Attempted to create a contiguous line using triangles to lackluster result. Refining required in both knowledge of trigonometry and implementation.
+Shifted design focus away for purely generating the brush shape via math/triangles and instead using textures.
+Future plans for creating brushes of various shapes and possibly for custom brushe shapes for import.

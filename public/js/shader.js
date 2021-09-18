@@ -36,7 +36,8 @@ const setProgram = (type, gl, program) => {
     program: program,
     attributeLocations: {
       vPosition: gl.getAttribLocation(program, 'aVertexPosition'),
-      vColor: gl.getAttribLocation(program, 'aVertexColor')
+      vColor: gl.getAttribLocation(program, 'aVertexColor'),
+      vTexture: gl.getAttribLocation(program,'aTextureCoord'),
     },
     uniformLocations: {
       uResolution: gl.getUniformLocation(program, 'uResolution'),
@@ -56,7 +57,7 @@ const onShaderInitializationError = err => {
 export const initialize = (gl) => {
   return Promise.all([
     createShaderProgram(gl,'line'),
-    //createShaderProgram(gl, 'texture')
+    createShaderProgram(gl, 'texture')
   ]);
 }
 

@@ -1,8 +1,9 @@
 import {createMatrix} from './utils.js';
+import * as Texture from './TextureBrush.js'
 //globals
 let graphics,
     tool = {type: 0, active: false},
-    pointer = {position: [], size: 1},
+    pointer = {position: [], size: 20},
     properties = {
       color: {
         primary: "#000000",
@@ -19,6 +20,22 @@ let graphics,
     actionLog = [],
     actionBuffer = [];
 //methods
+const boxifyPoint = (point, size) => {
+  return [
+    point[0] - size/2, point[1] - size/2,  0,  0,
+    point[0] + size/2, point[1] - size/2,  1,  0,
+    point[0] - size/2, point[1] + size/2,  0,  1,
+    point[0] - size/2, point[1] + size/2,  0,  1,
+    point[0] + size/2, point[1] + size/2,  1,  1,
+    point[0] + size/2, point[1] - size/2,  1,  0
+  ]
+}
+
+const calcPerpendicularSlope = (x1, y1, x2, y2) => {
+  let m = (y2 - y1)/(x2 - x1);
+  return -1/m; //slope m * perp slope p = -1
+}
+
 const clearAll = (color) => {
   graphics.clear(graphics.gl, color.r, color.g, color.b);
 }
@@ -27,10 +44,48 @@ const commit = buffer => {
   actionLog.push(buffer);
 }
 
-const createPath = (vertices, size) => {
-  let dx = vertices[2] - vertices[0],
-      dy = vertices[3] - vertices[1];
+const consolidateArray = array => {
+  return [].concat.apply([], array);
+}
 
+const createPath = (vertices, size) => {
+  let slope = calcPerpendicularSlope(vertices[0], vertices[1], vertices[2], vertices[3]);
+  let radians = Math.atan(slope);
+  let degrees = radians * (180/Math.PI);
+  degrees = (degrees + 360) % 360;
+  let a = vertices[0] - (Math.cos(degrees) *(size/2)),
+      b = vertices[1] - (Math.sin(degrees) * (size/2)),
+      c = vertices[0] + (Math.cos(degrees) * (size/2)),
+      d = vertices[1] + (Math.sin(degrees) * (size/2)),
+      e = vertices[2] - (Math.cos(degrees) * (size/2)),
+      f = vertices[3] - (Math.sin(degrees) * (size/2)),
+      g = vertices[2] + (Math.cos(degrees) * (size/2)),
+      h = vertices[3] + (Math.sin(degrees) * (size/2));
+  let path = [a, b, c, d, e, f, e, f, c, d, g, h]
+  //console.log(path);
+  return path;
+}
+
+const createTexturePath = (vertices, size) => {
+  vertices = vertices.map(val => Math.floor(val));
+  let dx = vertices[2] - vertices[0], dy = vertices[3] - vertices[1];
+  let grouped = new Array(Math.ceil(vertices.length)/2)
+  .fill('').map((x, i) => { return vertices.slice(i * 2, (i + 1) * 2)});
+  return grouped = consolidateArray(grouped.map( point => {return boxifyPoint(point, size)}));
+}
+
+const draw = { };
+
+draw.solidPath = (value, color_vertices) => {
+  let path = createPath(pointer.position, pointer.size);
+  let vertices = createMatrix(path, color_vertices, 2, 6);
+  //actionBuffer = actionBuffer.concat(vertices);
+  graphics.renderLine(vertices);
+}
+
+draw.texturePath = (value, event) => {
+  let path = createTexturePath(pointer.position, pointer.size);
+  graphics.renderLine(path, 0, Texture.getTexture(Texture.CIRCLE_BRUSH));
 }
 
 const getRelativePosition = event => {
@@ -82,6 +137,7 @@ pointerEvent.pointermove = event => {
 
 pointerEvent.pointerup = event => {
   tool.active = false;
+  return;
   if(actionBuffer.length > 0) {
     commit(actionBuffer);
   }
@@ -117,11 +173,10 @@ const toComponent = hex => {
 const toolAction = { };
 
 toolAction["0"] = (value, pointer_event) => {
-  let color_vertices = pointer_event.buttons == 1 ? properties.color.getPrimaryVertices : properties.color.getAlternateVertices;
-  let path = createPath(pointer.position, pointer.size);
-  let vertices = createMatrix(pointer.position, color_vertices, 2, 6);
-  actionBuffer = actionBuffer.concat(vertices);
-  graphics.renderLine(vertices);
+  if(pointer_event.buttons == 1)
+    draw.texturePath(value, pointer_event)
+  else
+    draw.solidPath(value, properties.color.getAlternateVertices);
 }
 
 const updatePointerPosition = event => {
@@ -136,6 +191,7 @@ const updatePointerPosition = event => {
 //exports
 export const init = Graphics => {
   graphics = Graphics;
+  Texture.init(graphics.gl);
   setListeners(graphics.gl.canvas);
   selectPrimaryColor('#000000');
   selectAlternateColor("#FFFFFF");
