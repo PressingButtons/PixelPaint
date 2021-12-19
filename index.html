@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>EasyPaintJs</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/editor.css">
+    <script type="text/javascript" src='/js/jquery.js'></script>
+    <script type="module" src='/js/index.js'></script>
+  </head>
+  <body>
+    <div class="taskbar">
+      <div class="dropdown">
+        <p>File</p>
+        <div class="content">
+          <p id='tnew'>New</p>
+          <p id='tsave'>Save</p>
+        </div>
+      </div>
+      <div class="dropdown">
+        <p>Edit</p>
+        <div class="content">
+
+        </div>
+      </div>
+      <div class="dropdown">
+        <p>Manual</p>
+      </div>
+    </div>
+
+    <div class="flex grow">
+
+      <div class="ipane">
+        <div class="icon"><img src="./images/icons8-pencil-64.png" alt="Pencil"></div>
+        <div class="icon"><img src="./images/icons8-pen-64.png" alt="Pen"></div>
+        <div class="icon"><img src="./images/icons8-brush-60.png" alt="Brush"></div>
+        <div class="icon"><img src="./images/icons8-erase-64.png" alt="Eraser"></div>
+        <div class="icon"><img src="./images/icons8-search-48.png" alt="Eraser"></div>
+      </div>
+
+      <div class="workspace">
+        <div class="paper">
+          <div class="layers">
+
+          </div>
+          <canvas id="bufferCanvas" width="2480px" height="3508px"></canvas>
+          <img src="./images/icons8-circle-80.png" alt="" class='cursor'>
+        </div>
+      </div>
+
+      <div class="ipane">
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

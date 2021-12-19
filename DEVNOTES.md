@@ -31,3 +31,11 @@ There's a bit of a draw to option 2 as if the system work, custom brushes could 
 Attempted to create a contiguous line using triangles to lackluster result. Refining required in both knowledge of trigonometry and implementation.
 Shifted design focus away for purely generating the brush shape via math/triangles and instead using textures.
 Future plans for creating brushes of various shapes and possibly for custom brushe shapes for import.
+
+#12/16/2021
+
+##The Return
+
+It's been quite some time since the last update. In that hiatus I've worked on other projects and learned some new technologies.
+For the purpose of this application, I'm simplifying it. Drawing will be handled by cavnas2d instead of webgl.
+I've also removed express and have instead opted for a simple server for hosting responsibilities.

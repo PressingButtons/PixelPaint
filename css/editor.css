@@ -1,0 +1,49 @@
+:root {
+  --icon: #AAA;
+  --iconHi: #CCC;
+}
+
+.ipane {
+  background: var(--plateColor);
+}
+
+.workspace {
+  overflow: hidden;
+  flex:1;
+}
+
+.paper {
+  height: 3508px;
+  width: 2480px;
+  background: white;
+  transform-origin: 0 0;
+  transform: scale(0.3);
+  cursor: crosshair;
+}
+.paper canvas {
+  position: absolute;
+  z-index: 1;
+  touch-action: none;
+}
+
+.icon {
+  margin: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  background: var(--icon);
+  cursor: pointer;
+}
+
+.icon:hover {
+  background:  var(--iconHi);
+}
+
+.icon img {
+  width: 32px;
+  height: 32px;
+}
+
+
+.cursor {
+  position: absolute;
+}
