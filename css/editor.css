@@ -32,9 +32,10 @@
   padding: 10px;
   background: var(--icon);
   cursor: pointer;
+  display: flex;
 }
 
-.icon:hover {
+.icon:hover, .icon.active {
   background:  var(--iconHi);
 }
 
@@ -43,7 +44,15 @@
   height: 32px;
 }
 
+.icon p {
+  color: black;
+}
+
 
 .cursor {
   position: absolute;
+}
+
+.section {
+  border-bottom: 1px solid black;
 }
