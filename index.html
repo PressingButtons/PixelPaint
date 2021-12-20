@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title>EasyPaintJs</title>
-    <link rel="stylesheet" href="/css/reset.css">
-    <link rel="stylesheet" href="/css/app.css">
-    <link rel="stylesheet" href="/css/editor.css">
-    <script type="text/javascript" src='/js/jquery.js'></script>
-    <script type="module" src='/js/index.js'></script>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/app.css">
+    <link rel="stylesheet" href="./css/editor.css">
+    <script type="text/javascript" src='./js/jquery.js'></script>
+    <script type="module" src='./js/index.js'></script>
   </head>
   <body>
     <div class="taskbar">
@@ -58,9 +58,35 @@
           <div class="icon">
             <img src="./images/icons8-circle-80.png" alt="Eraser">
             <p id='toolSize'>010</p>
-            <input type="range" name="" value="10" min="1" max="200" id='toolSizeInput' autocomplete="off">
+            <input type="range" name="brushSize" value="10" min="1" max="200" id='toolSizeInput' autocomplete="off">
           </div>
         </div>
+
+        <div class="section">
+          <div class="palette">
+            <div class="color" style= "background:#000000"></div>
+            <div class="color" style= "background:#FFFFFF"></div>
+            <div class="color" style= "background:#000000"></div>
+            <div class="color" style= "background:#000000"></div>
+            <div class="color" style= "background:#000000"></div>
+            <div class="color" style= "background:#000000"></div>
+            <div class="color" style= "background:#000000"></div>
+            <div class="color" style= "background:#000000"></div>
+            <div class="color" style= "background:#000000"></div>
+            <div class="color" style= "background:#000000"></div>
+            <div class="color" style= "background:#000000"></div>
+            <div class="color" style= "background:#000000"></div>
+            <div class="color" style= "background:#000000"></div>
+          </div>
+          <div class="opacity">
+            <p>Opacity</p>
+            <div class="preview">
+              <div class="gradient"></div>
+            </div>
+            <input type="range" name="opacity" value="100" min="1" max="100" autocomplete="off">
+          </div>
+        </div>
+
       </div>
 
       <div class="workspace">

@@ -5,7 +5,11 @@ import * as Paper from './paper.js';
 let graphicPen, eraser;
 let toolSize = 10;
 let currentTool;
+let currentColor = '#000000'
 let paper;
+
+const colorPicker = document.createElement('input');
+colorPicker.setAttribute('type', 'color');
 
 const initTools = ( ) => {
   const ctx = $('#bufferCanvas')[0].getContext('2d');
@@ -16,6 +20,23 @@ const initTools = ( ) => {
 const hiliteIcon = icon => {
   $('.icon').removeClass('active');
   $(icon).addClass('active');
+}
+
+const onColorClick = function(event) {
+  currentColor = $(event.target).css('background-color');
+  $('.gradient').css('background', `linear-gradient(-90deg, ${currentColor}, transparent)`);
+  if(currentTool && currentTool.strokeStyle) currentTool.strokeStyle = currentColor;
+}
+
+const onColorDClick = function(event) {
+  pickColor( ).then(color => {$(event.target).css('background', color)})
+}
+
+const pickColor = ( ) => {
+  return new Promise(function(resolve, reject) {
+    $(colorPicker).change(event => {resolve(event.target.value)});
+    $(colorPicker).trigger('click', event.target);
+  });
 }
 
 const onIconClick = function(jqev) {
@@ -41,6 +62,8 @@ const onToolSizeChange = event => {
 const setListeners = ( ) => {
   $('.icon').click(onIconClick);
   $('#toolSizeInput').change(onToolSizeChange);
+  $('.color').dblclick(onColorDClick);
+  $('.color').click(onColorClick);
 }
 
 export default function( ) {
