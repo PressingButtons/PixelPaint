@@ -30,7 +30,7 @@ const onPointerDown = function(event) {
 const onPointerMove = function(event) {
   const position = parseRelativePosition(event);
   moveCursor(position);
-  toolManager.update(position, Paper.getBuffer( ));
+  toolManager.update(position, Paper);
 }
 
 const onPointerUp =  function(event) {
@@ -48,6 +48,7 @@ const hiliteIcon = icon => {
 const selectTool = index => {
   switch (index) {
     case 0: toolManager.setTool('pen'); break;
+    case 3: toolManager.setTool('eraser'); break;
   }
 }
 

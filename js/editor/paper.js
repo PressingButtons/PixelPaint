@@ -6,6 +6,7 @@ let currentLayer = 0;
 const addLayer = ( ) => {
   const ctx = createCanvasContext(size);
   ctx.canvas.setAttribute('id', 'layer' + layers.length);
+  document.querySelector('.paper .layers').append(ctx.canvas);
   layers.push(ctx);
 }
 

@@ -5,7 +5,7 @@ const createPathConfig = (pen, context) => {
 
   const config = {
     strokeStyle: pen.strokeStyle,
-    renderType: "source-over",
+    renderType: "destination-out",
     size: pen.size,
     positions: pen.positions,
     ctx: context,
@@ -16,45 +16,43 @@ const createPathConfig = (pen, context) => {
 }
 
 //Graphic Pen States
-const GraphicPenDownState = function(pen) {
+const EraserDownState = function(pen) {
   this.pen = pen;
 }
 
-GraphicPenDownState.prototype.enterState = function(context) {
+EraserDownState.prototype.enterState = function(context) {
   this.pen.positions = [];
 }
 
-GraphicPenDownState.prototype.exitState = function(context) {
-  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+EraserDownState.prototype.exitState = function(context) {
+
 }
 
-GraphicPenDownState.prototype.update = function(pos, context){
+EraserDownState.prototype.update = function(pos, context){
   this.pen.logPosition(pos);
-  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
   const config = createPathConfig(this.pen, context);
   renderPath(config);
 }
-
 
 ///////////////////////////////////////////////////////////////////////////
 /// Up State
 ///////////////////////////////////////////////////////////////////////////
 
-const GraphicPenUpState = function(pen) {
+const EraserUpState = function(pen) {
   this.pen = pen;
 }
 
-GraphicPenUpState.prototype.enterState = function(context) {
+EraserUpState.prototype.enterState = function(context) {
   const config = createPathConfig(this.pen, context);
   renderPath(config);
 }
 
-GraphicPenUpState.prototype.exitState = function(context) {
+EraserUpState.prototype.exitState = function(context) {
+  
+}
+
+EraserUpState.prototype.update = function(position) {
 
 }
 
-GraphicPenUpState.prototype.update = function(position) {
-
-}
-
-export {GraphicPenDownState, GraphicPenUpState};
+export {EraserDownState, EraserUpState};

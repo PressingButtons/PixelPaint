@@ -9,19 +9,24 @@ const AppTool = function(config) {
   let bufferContext = config.buffer;
 
   let tools = {
-    pen : new Tools.GraphicPen(this)
+    pen : new Tools.GraphicPen(this),
+    eraser: new Tools.Eraser(this),
   }
 
   const selectTool = tool => {
     currentTool = tool;
   }
 
-  const update = (pos, ctx) => {
-    if( currentTool ) currentTool.update({size: size}, pos, ctx);
+  const update = (pos, paper) => {
+    if( currentTool ) {
+      if(currentTool != tools.eraser) currentTool.update({size: size}, pos, paper.getBuffer());
+      else currentTool.update({size: size}, pos, paper.getCurrentLayer())
+    }
   }
 
   const cursorDown = ( ) => {
-    if(currentTool) currentTool.toDownState(bufferContext);
+    if(currentTool && currentTool != tools.eraser) currentTool.toDownState(bufferContext);
+    else if(currentTool && currentTool == tools.eraser) currentTool.toDownState(mainContext);
   }
 
   const cursorUp = ( ) => {
