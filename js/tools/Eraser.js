@@ -1,5 +1,5 @@
 import GraphicTool from './GraphicTool.js';
-import {EraserUpState, EraserDownState} from '../toolstates/Eraserstates.js';
+import {EraserUpState, EraserDownState} from '../toolstates/eraserstates.js';
 
 const Eraser = function(config) {
   GraphicTool.call(this, config);

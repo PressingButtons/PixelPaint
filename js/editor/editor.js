@@ -6,7 +6,7 @@ let toolManager;
 let scale = 0.3;
 
 const init = ( ) => {
-  toolManager = new AppTool({size: 105, main: Paper.getLayer(0), buffer: Paper.getBuffer()});
+  toolManager = new AppTool({size: 10, paper: Paper});
   setListeners( );
   Paper.bindPaper('pointerdown', onPointerDown);
   Paper.bindPaper('pointermove', onPointerMove);
@@ -21,16 +21,27 @@ const moveCursor = mousePosition => {
   cursor.style.transform = str
 }
 //Listeners
+const onColorSelect = event => {
+  toolManager.color = event.detail;
+  const gradient = document.querySelector('.gradient')
+  const color = `linear-gradient(-90deg, ${event.detail}, transparent)`;
+  gradient.style.background = color;
+};
+
+const onOpacityChange = function(event) {
+  toolManager.opacity = ((event.target.value / 100) * 255);
+}
+
 const onPointerDown = function(event) {
   const position = parseRelativePosition(event);
   moveCursor(position);
-  toolManager.cursorDown(position, Paper.getBuffer( ));
+  toolManager.cursorDown(position, event.pressure, Paper.getBuffer( ));
 }
 
 const onPointerMove = function(event) {
   const position = parseRelativePosition(event);
   moveCursor(position);
-  toolManager.update(position, Paper);
+  toolManager.update(position, event.pressure, Paper);
 }
 
 const onPointerUp =  function(event) {
@@ -39,39 +50,38 @@ const onPointerUp =  function(event) {
   toolManager.cursorUp(position, Paper.getCurrentLayer( ));
 }
 
+const onToolSizeChange = function(event) {
+  toolManager.setSize(event.target.value);
+  document.getElementById('toolSize').innerHTML = (event.target.value).toString().padStart(3, '0');
+  document.querySelector('#cursorImage').style.width = `${event.target.value}px`;
+}
+
 const hiliteIcon = icon => {
   $('.icon').removeClass('active');
   $(icon).addClass('active');
 }
 
 
-const selectTool = index => {
+const selectTool = function(event) {
+  const index = $(this).index( );
   switch (index) {
-    case 0: toolManager.setTool('pen'); break;
-    case 3: toolManager.setTool('eraser'); break;
+    case 0:
+      toolManager.setTool('pen');
+      hiliteIcon(this);
+    break;
+    case 3:
+      toolManager.setTool('eraser');
+      hiliteIcon(this);
+     break;
   }
 }
 
-const onIconClick = function(jqev) {
-  selectTool($(this).index());
-}
-
-const setSize = size => {
-  if(currentTool) {
-    currentTool.size = size;
-  }
-  $('#toolSizeInput').val(size);
-  $('#toolSize').html(size.toString().padStart(3, '0'));
-}
-
-const onToolSizeChange = event => {
-  setSize(event.target.value);
-}
 
 const setListeners = ( ) => {
-  $('.icon').click(onIconClick);
-  //$('#toolSizeInput').change(onToolSizeChange);
-  //$('#opacity').change(onOpacityChange);
+  $('.icon').click(selectTool);
+  $('#toolSizeInput').change(onToolSizeChange);
+  $('#opacity').change(onOpacityChange);
+  document.addEventListener('colorselect', onColorSelect);
 }
 
 export default function( ) {

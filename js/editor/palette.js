@@ -1,4 +1,4 @@
-const palette = { };
+const palette = {0: "#FFFFFF"};
 
 const colorInput = document.createElement('input');
 colorInput.setAttribute('type', 'color');
@@ -9,6 +9,7 @@ const changeColor = function(event) {
 
 const selectColor = function(event) {
   const index = $(this).index( );
+  if(!palette[index]) palette[index] = "#000000";
   document.dispatchEvent(new CustomEvent('colorselect', {detail: palette[index]}));
 }
 
@@ -20,9 +21,9 @@ const setColor = (element, color) => {
 }
 
 const updateColor = ( ) => {
-  return new new Promise(function(resolve, reject) {
+  return new Promise(function(resolve, reject) {
     colorInput.addEventListener('change', event => {resolve(event.target.value)});
-    colorInput.dispatchEvent('click');
+    colorInput.click( );
   });
 }
 

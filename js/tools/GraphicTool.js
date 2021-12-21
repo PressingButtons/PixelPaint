@@ -8,30 +8,35 @@ const GraphicTool = function(config) {
   this.context;
   this.positions = [ ];
   this.scale = 1;
+  this.pressure = 1;
+  this.opacity = 1;
 }
 
 GraphicTool.prototype.logPosition = function(pos) {
   this.positions.push(new Position2D(pos));
 }
 
-GraphicTool.prototype.update = function(config, pos, context, scale) {
-  this.context = context;
-  this.size = config.size;
-  this.currentState.update(pos, context);
+GraphicTool.prototype.update = function(config) {
+  this.context = config.context;
+  this.size = config.size || this.size;
+  this.opacity = config.opacity || this.opacity;
+  this.pressure = config.pressure || this.pressure;
+  this.strokeStyle = config.strokeStyle || this.strokeStyle;
+  this.currentState.update({pos: config.pos, context: this.context});
 }
 
-GraphicTool.prototype.toDownState = function(context) {
-  this.currentState.exitState(this.context);
+GraphicTool.prototype.toDownState = function(config) {
+  this.currentState.exitState(config);
   this.currentState = this.DownState;
-  this.currentState.enterState(context);
-  this.context = context;
+  this.currentState.enterState(config);
+  this.context = config.context;
 }
 
-GraphicTool.prototype.toUpState = function(context) {
-  this.currentState.exitState(this.context);
+GraphicTool.prototype.toUpState = function(config) {
+  this.currentState.exitState(config);
   this.currentState = this.UpState;
-  this.currentState.enterState(context);
-  this.context = context;
+  this.currentState.enterState(config);
+  this.context = config.context;
 }
 
 export default GraphicTool;

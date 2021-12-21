@@ -5,8 +5,9 @@ const AppTool = function(config) {
   let currentTool;
   let toolIsDown = false;
   let size = config.size;
-  let mainContext = config.main;
-  let bufferContext = config.buffer;
+  let _opacity = 255;
+  let color = "#000000"
+  let paper = config.paper;
 
   let tools = {
     pen : new Tools.GraphicPen(this),
@@ -17,24 +18,39 @@ const AppTool = function(config) {
     currentTool = tool;
   }
 
-  const update = (pos, paper) => {
+  const update = (pos, pressure) => {
     if( currentTool ) {
-      if(currentTool != tools.eraser) currentTool.update({size: size}, pos, paper.getBuffer());
-      else currentTool.update({size: size}, pos, paper.getCurrentLayer())
+      if(currentTool != tools.eraser) currentTool.update(createConfig(pos, pressure, paper.getBuffer()));
+      else currentTool.update(createConfig(pos, pressure, paper.getCurrentLayer()));
+    }
+  }
+
+  const createConfig = function(pos, pressure, context) {
+    return {
+      size: size,
+      pos: pos,
+      strokeStyle: color,
+      pressure: pressure,
+      opacity: _opacity,
+      context: context
     }
   }
 
   const cursorDown = ( ) => {
-    if(currentTool && currentTool != tools.eraser) currentTool.toDownState(bufferContext);
-    else if(currentTool && currentTool == tools.eraser) currentTool.toDownState(mainContext);
+    if(currentTool && currentTool != tools.eraser) currentTool.toDownState({context: paper.getBuffer(), opacity: _opacity});
+    else if(currentTool && currentTool == tools.eraser) currentTool.toDownState({context: paper.getCurrentLayer()});
   }
 
   const cursorUp = ( ) => {
-    if(currentTool) currentTool.toUpState(mainContext);
+    if(currentTool) currentTool.toUpState(createConfig(null, 0, paper.getCurrentLayer()));
   }
 
   const getSize = ( ) => {
     return size;
+  }
+
+  const setSize = n => {
+    size = n;
   }
 
   const setMainContext = context => {
@@ -55,11 +71,14 @@ const AppTool = function(config) {
   return {
     cursorDown: cursorDown,
     cursorUp: cursorUp,
-    setMainContext: setMainContext,
     setScale: setScale,
     setTool: setTool,
     update: update,
     getSize: getSize,
+    setSize: setSize,
+    set color( value ) { color = value },
+    get opacity( ) { return _opacity;},
+    set opacity(n) { _opacity = n|0; },
     get ToolIsDown( ) {return toolIsDown}
   }
 

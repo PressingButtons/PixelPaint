@@ -53,7 +53,7 @@
   position: absolute;
 }
 
-.section {
+.section, section {
   border-bottom: 1px solid black;
   display: flex;
   flex-flow: column nowrap;
@@ -86,4 +86,14 @@ div.color {
 .gradient {
   flex:1;
   background: linear-gradient(-90deg, #000000, transparent)
+}
+
+input[name="opacity"] {
+  width: 100%;
+}
+
+
+section > h1 {
+  background: var(--icon);
+  color: #333;
 }

@@ -20,7 +20,7 @@ const EraserDownState = function(pen) {
   this.pen = pen;
 }
 
-EraserDownState.prototype.enterState = function(context) {
+EraserDownState.prototype.enterState = function(config) {
   this.pen.positions = [];
 }
 
@@ -28,10 +28,11 @@ EraserDownState.prototype.exitState = function(context) {
 
 }
 
-EraserDownState.prototype.update = function(pos, context){
-  this.pen.logPosition(pos);
-  const config = createPathConfig(this.pen, context);
-  renderPath(config);
+EraserDownState.prototype.update = function(config){
+  this.pen.logPosition(config.pos);
+  this.pen.pressure = 1;
+  const path = createPathConfig(this.pen, config.context);
+  renderPath(path);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -42,16 +43,16 @@ const EraserUpState = function(pen) {
   this.pen = pen;
 }
 
-EraserUpState.prototype.enterState = function(context) {
-  const config = createPathConfig(this.pen, context);
-  renderPath(config);
+EraserUpState.prototype.enterState = function(config) {
+  const path = createPathConfig(this.pen, config.context);
+  renderPath(path);
 }
 
-EraserUpState.prototype.exitState = function(context) {
-  
+EraserUpState.prototype.exitState = function(config) {
+
 }
 
-EraserUpState.prototype.update = function(position) {
+EraserUpState.prototype.update = function(config) {
 
 }
 
