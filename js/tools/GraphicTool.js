@@ -1,36 +1,31 @@
-const Position = function( ) {
-  this.x = 0;
-  this.y = 0;
-  this.scale = 1;
-}
-
-Position.prototype.set = function(position) {
-  this.x = position.x / this.scale;
-  this.y = position.y / this.scale;
-  this.action = function( ) { };
+const DEFAULT = {
+  SIZE: 10
 }
 
 const GraphicTool = function(config) {
-  this.ctx = config.ctx;
-  this.size = config.size || 5;
-  this.inUse = false;
-  this.start = new Position( );
-  this.end = new Position( );
+  this.size = config.size || DEFAULT.SIZE;
   this.currentState;
+  this.positions = [ ];
+  this.scale = 1;
 }
 
-GraphicTool.prototype.activate = function(canvas, onCommit) {
-  this.ctx = canvas.getContext('2d');
-  //this.CommitChange = onCommit;
+GraphicTool.prototype.logPosition = function(pos) {
+  this.positions.push(new Position2D(pos));
 }
 
-GraphicTool.prototype.SwitchState = function(state, position) {
-  this.currentState = state;
-  this.currentState.EnterState(this, position);
+GraphicTool.prototype.update = function(config, pos, context, scale) {
+  this.size = config.size;
+  this.currentState.update(pos, context);
 }
 
-GraphicTool.prototype.Update = function(position) {
-  this.currentState.Update(this, position);
+GraphicTool.prototype.toDownState = function(context, scale) {
+  this.currentState = this.DownState;
+  this.currentState.enterState(context);
 }
 
-export default GraphicTool
+GraphicTool.prototype.toUpState = function(context,) {
+  this.currentState = this.UpState;
+  this.currentState.enterState(context);
+}
+
+export default GraphicTool;

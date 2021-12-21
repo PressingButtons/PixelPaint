@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./css/app.css">
     <link rel="stylesheet" href="./css/editor.css">
     <script type="text/javascript" src='./js/jquery.js'></script>
+    <script type="module" src='./js/utils/global.js'></script>
     <script type="module" src='./js/index.js'></script>
   </head>
   <body>
@@ -63,21 +64,7 @@
         </div>
 
         <div class="section">
-          <div class="palette">
-            <div class="color" style= "background:#000000"></div>
-            <div class="color" style= "background:#FFFFFF"></div>
-            <div class="color" style= "background:#000000"></div>
-            <div class="color" style= "background:#000000"></div>
-            <div class="color" style= "background:#000000"></div>
-            <div class="color" style= "background:#000000"></div>
-            <div class="color" style= "background:#000000"></div>
-            <div class="color" style= "background:#000000"></div>
-            <div class="color" style= "background:#000000"></div>
-            <div class="color" style= "background:#000000"></div>
-            <div class="color" style= "background:#000000"></div>
-            <div class="color" style= "background:#000000"></div>
-            <div class="color" style= "background:#000000"></div>
-          </div>
+          <div class="palette"></div>
           <div class="opacity">
             <p>Opacity</p>
             <div class="preview">
@@ -92,10 +79,10 @@
       <div class="workspace">
         <div class="paper">
           <div class="layers">
-
+            <canvas id="layer0" width="2480px" height="3508px"></canvas>
           </div>
           <canvas id="bufferCanvas" width="2480px" height="3508px"></canvas>
-          <img src="./images/icons8-circle-80.png" alt="" class='cursor'>
+          <img src="./images/icons8-circle-80.png" alt="" class='cursor' id='cursorImage'>
         </div>
       </div>
 
