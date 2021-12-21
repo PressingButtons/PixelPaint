@@ -8,6 +8,7 @@ const AppTool = function(config) {
   let _opacity = 255;
   let color = "#000000"
   let paper = config.paper;
+  let blendMode = 'source-over'
 
   let tools = {
     pen : new Tools.GraphicPen(this),
@@ -25,6 +26,10 @@ const AppTool = function(config) {
     }
   }
 
+  const changeBlend = event => {
+    blendMode = event.target.value
+  }
+
   const createConfig = function(pos, pressure, context) {
     return {
       size: size,
@@ -32,7 +37,8 @@ const AppTool = function(config) {
       strokeStyle: color,
       pressure: pressure,
       opacity: _opacity,
-      context: context
+      context: context,
+      blendMode: blendMode
     }
   }
 
@@ -67,8 +73,8 @@ const AppTool = function(config) {
   }
 
   setScale(0.3);
-
   return {
+    changeBlend: changeBlend,
     cursorDown: cursorDown,
     cursorUp: cursorUp,
     setScale: setScale,

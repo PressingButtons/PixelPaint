@@ -22,6 +22,7 @@ GraphicTool.prototype.update = function(config) {
   this.opacity = config.opacity || this.opacity;
   this.pressure = config.pressure || this.pressure;
   this.strokeStyle = config.strokeStyle || this.strokeStyle;
+  this.blendMode = config.blendMode || "source-over";
   this.currentState.update({pos: config.pos, context: this.context});
 }
 

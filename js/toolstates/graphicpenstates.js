@@ -5,7 +5,7 @@ const createPathConfig = (pen, context) => {
   const opaqueValue = ((pen.opacity * /*pen.pressure*/ 1) | 0).toString(16).padStart(2, '0');
   const config = {
     strokeStyle: pen.strokeStyle + opaqueValue,
-    renderType: "source-over",
+    renderType: pen.blendMode || "source-over",
     size: pen.size,
     positions: pen.positions,
     ctx: context,

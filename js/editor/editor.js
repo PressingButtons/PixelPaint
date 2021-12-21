@@ -28,6 +28,16 @@ const onColorSelect = event => {
   gradient.style.background = color;
 };
 
+const onHotKey = event => {
+  const key = event.key.toLowerCase( );
+  if(key == 'p') document.getElementById('pen').click( );
+  if(key == 'e') document.getElementById('eraser').click( );
+}
+
+const onIconClick = function(event) {
+  selectTool(event.target.id, event.target);
+}
+
 const onOpacityChange = function(event) {
   toolManager.opacity = ((event.target.value / 100) * 255);
 }
@@ -62,26 +72,21 @@ const hiliteIcon = icon => {
 }
 
 
-const selectTool = function(event) {
-  const index = $(this).index( );
-  switch (index) {
-    case 0:
-      toolManager.setTool('pen');
-      hiliteIcon(this);
-    break;
-    case 3:
-      toolManager.setTool('eraser');
-      hiliteIcon(this);
-     break;
+const selectTool = function(type, icon) {
+  if(type == "pen" || type == "eraser") {
+    toolManager.setTool(type);
+    hiliteIcon(icon);
   }
 }
 
 
 const setListeners = ( ) => {
-  $('.icon').click(selectTool);
+  $('.icon').click(onIconClick);
   $('#toolSizeInput').change(onToolSizeChange);
   $('#opacity').change(onOpacityChange);
+  document.addEventListener('keydown', onHotKey);
   document.addEventListener('colorselect', onColorSelect);
+  document.getElementById('blendmode').addEventListener('change', toolManager.changeBlend);
 }
 
 export default function( ) {
