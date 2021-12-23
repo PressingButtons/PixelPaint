@@ -66,11 +66,6 @@ const onToolSizeChange = function(event) {
   document.querySelector('#cursorImage').style.width = `${event.target.value}px`;
 }
 
-const hiliteIcon = icon => {
-  $('.icon').removeClass('active');
-  $(icon).addClass('active');
-}
-
 
 const selectTool = function(type, icon) {
   if(type == "pen" || type == "eraser") {
@@ -81,12 +76,11 @@ const selectTool = function(type, icon) {
 
 
 const setListeners = ( ) => {
-  $('.icon').click(onIconClick);
-  $('#toolSizeInput').change(onToolSizeChange);
-  $('#opacity').change(onOpacityChange);
-  document.addEventListener('keydown', onHotKey);
-  document.addEventListener('colorselect', onColorSelect);
-  document.getElementById('blendmode').addEventListener('change', toolManager.changeBlend);
+  document.addEventListener('brushBlendMode', toolManager.changeBlend);
+  document.addEventListener('brushOpacity', toolManager.changeOpacity);
+  document.addEventListener('brushSize', toolManager.changeSize);
+  document.addEventListener('toolSelect', toolManager.changeTool);
+  document.addEventListener('colorselec', onColorSelect);
 }
 
 export default function( ) {

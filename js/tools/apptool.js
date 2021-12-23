@@ -30,6 +30,19 @@ const AppTool = function(config) {
     blendMode = event.target.value
   }
 
+  const changeOpacity = event => {
+    _opacity = (event.detail/100) * 255;
+  }
+
+  const changeSize = event => {
+    size = event.detail;
+  }
+
+  const changeTool = event => {
+    currentTool = tools[event.detail] || null;
+    if(currentTool) currentTool.currentState = currentTool.UpState;
+  }
+
   const createConfig = function(pos, pressure, context) {
     return {
       size: size,
@@ -64,8 +77,8 @@ const AppTool = function(config) {
   }
 
   const setTool = type => {
+    console.log(type);
     currentTool = tools[type];
-    currentTool.currentState = currentTool.UpState;
   }
 
   const setScale = scale => {
@@ -75,10 +88,12 @@ const AppTool = function(config) {
   setScale(0.3);
   return {
     changeBlend: changeBlend,
+    changeOpacity: changeOpacity,
+    changeSize: changeSize,
+    changeTool: changeTool,
     cursorDown: cursorDown,
     cursorUp: cursorUp,
     setScale: setScale,
-    setTool: setTool,
     update: update,
     getSize: getSize,
     setSize: setSize,

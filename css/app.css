@@ -28,6 +28,15 @@ p, h1, h2, h3, h4, h5, h6 {
   padding: 6px;
   user-select: none;
 }
+
+select, input {
+  background: none;
+  border: none;
+  color: var(--fontColor);
+  margin: 4px;
+  border: 1px solid black;
+}
+
 .flex {
   display: flex;
 }

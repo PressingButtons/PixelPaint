@@ -32,91 +32,95 @@
 
     <div class="flex grow">
 
-      <div class="ipane">
-        <section>
-          <h2>Brushes</h1>
+      <div class="ipane flex">
+
+        <div class="flex col" style='border-right: 1px solid black;' id="toolpane">
+          <section>
             <div class="icon" id='pencil'>
-              <img src="./images/icons8-pencil-64.png" alt="Pencil">
-              <p>Pencil</p>
+              <img src="./images/icons8-pencil-64.png" alt="Pencil" class='active'>
             </div>
-            <div class="icon" id ="pen">
+            <div class="icon" id='pen'>
               <img src="./images/icons8-pen-64.png" alt="Pen">
-              <p>Pen</p>
             </div>
-            <div class="icon">
+            <div class="icon" id='brush'>
               <img src="./images/icons8-brush-60.png" alt="Brush">
-              <p>Brush</p>
             </div>
-            <p>Blend Mode</p>
-            <select class="" name="blendmode" autocomplete="off" id='blendmode'>
-              <option value="source-over">Normal</option>
-              <option value="multiply">Multiply</option>
-              <option value="lighter">Lighter</option>
-              <option value="screen">Screen</option>
-              <option value="overlay">Overlay</option>
-              <option value="darken">Darken</option>
-              <option value="color-dodge">Color Dodge</option>
-              <option value="color-burn">Color Burn</option>
-              <option value="soft-light">Soft Light</option>
-            </select>
+          </section>
+          <section>
+            <div class="icon" id='eraser'>
+              <img src="./images/icons8-erase-64.png" alt="Eraser">
+            </div>
+          </section>
+          <section>
+            <div class="icon" id='zoom'>
+              <img src="./images/icons8-search-48.png" alt="Magnifty">
+            </div>
+            <div class="icon" id='eyedropper'>
+              <img src="./images/icons8-dropper-64.png" alt="Eye Dropper">
+            </div>
+          </section>
+        </div>
+
+        <div class="flex col" style="border-right: 1px solid black;">
+        <!--Tool details -->
+        <section>
+          <h1>Tool Detail</h1>
+          <section id='blendSection'>
+            <div class="flex">
+              <p>Blend Mode</p>
+              <select class="" name="blendmode" autocomplete="off" id='blendmode'>
+                <option value="source-over">Normal</option>
+                <option value="multiply">Multiply</option>
+                <option value="lighter">Lighter</option>
+                <option value="screen">Screen</option>
+                <option value="overlay">Overlay</option>
+                <option value="darken">Darken</option>
+                <option value="color-dodge">Color Dodge</option>
+                <option value="color-burn">Color Burn</option>
+                <option value="soft-light">Soft Light</option>
+              </select>
+            </div>
+          </section>
+          <section id="opacitySection">
+            <div class="flex">
+              <p>Opacity</p>
+              <input type="number" name="opacity" value="100" min="1" max="100" autocomplete="off" id="opacityAdj">
+            </div>
+          </section>
+          <section id="sizeSection">
+            <div class="flex">
+              <p>Tool Size</p>
+              <input type="number" name="brushsize" value="10" min="1" max="200" autocomplete="off" id="sizeAdj">
+            </div>
+          </section>
         </section>
-        <div class="section">
-
-          <div class="icon" id='eraser'>
-            <img src="./images/icons8-erase-64.png" alt="Eraser">
-            <p>Eraser</p>
-          </div>
-          <div class="icon">
-            <img src="./images/icons8-search-48.png" alt="Eraser">
-            <p>Zoom</p>
-          </div>
-        </div>
-        <div class="section">
-          <div class="icon">
-            <img src="./images/icons8-circle-80.png" alt="Eraser">
-            <p id='toolSize'>010</p>
-            <input type="range" name="brushSize" value="10" min="1" max="200" id='toolSizeInput' autocomplete="off">
-          </div>
-        </div>
-
-        <div class="section">
-          <div class="palette"></div>
-          <div class="opacity">
-            <p>Opacity</p>
-            <div class="preview">
-              <div class="gradient"></div>
+        <!-- Palette Detail -->
+        <section width="100%">
+          <h1>Palette</h1>
+          <div class="palette"> </div>
+        </section>
+        <!-- Layers -->
+        <section>
+          <h1>Layers</h1>
+          <div class="buttons">
+            <div class="icon" id="newLayer">
+              <img src="./images/icons8-add-64.png" alt="New Layer">
             </div>
-            <input type="range" name="opacity" value="100" min="1" max="100" autocomplete="off" id='opacity'>
           </div>
-        </div>
+          <div class="flex col" id="layerList">
 
+          </div>
+        </section>
       </div>
-
+    </div>
+    <!-- WORKSPACE -->
       <div class="workspace">
         <div class="paper">
-          <div class="layers">
+          <div class="layers" id="layers">
           </div>
           <canvas id="bufferCanvas" width="2480px" height="3508px"></canvas>
           <img src="./images/icons8-circle-80.png" alt="" class='cursor' id='cursorImage'>
         </div>
-      </div>
-
-      <div class="ipane">
-        <section>
-          <h1>Whole View</h1>
-          <div class="">
-            <canvas id="wholeView" width="212" height="300"></canvas>
-          </div>
-        </section>
-        <section>
-          <h1>Layers</h1>
-          <div class="buttons">
-
-          </div>
-          <div class="layers">
-
-          </div>
-        </section>
       </div>
 
     </div>

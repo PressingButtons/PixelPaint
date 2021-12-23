@@ -3,6 +3,20 @@
   --iconHi: #CCC;
 }
 
+section div.flex {
+  justify-content: space-between;
+}
+
+input {
+  width: 100px;
+}
+
+.buttons {
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--fontColor);
+  display: flex;
+}
+
 .ipane {
   background: var(--plateColor);
 }
@@ -26,20 +40,43 @@
   touch-action: none;
 }
 
+.icons {
+  margin: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  background: var(--icon);
+}
+
+.icons img {
+  display: none;
+  width: 32px;
+  height: 32px;
+}
+
+.icons img.active {
+  display: block;
+}
+
+
 .icon {
   margin: 10px;
   border-radius: 5px;
   padding: 10px;
   background: var(--icon);
   cursor: pointer;
-  display: flex;
 }
+
+
+.buttons .icon {
+  padding: 2px;
+}
+
 
 .icon:hover, .icon.active {
   background:  var(--iconHi);
 }
 
-.icon img {
+.icon img, .buttons img {
   width: 32px;
   height: 32px;
 }
@@ -62,17 +99,16 @@
 
 .palette {
   margin: 0;
-  width: 300px;
   padding: 3px;
-  display: flex;
-  flex-wrap: wrap;
+  width: 220px;
 }
 
 div.color {
   border: 1px solid black;
-  min-width: 32px;
-  min-height: 32px;
+  width: 32px;
+  height: 32px;
   margin: 1px;
+  display: inline-flex;
 }
 
 .preview {
@@ -88,12 +124,16 @@ div.color {
   background: linear-gradient(-90deg, #000000, transparent)
 }
 
-input[name="opacity"] {
-  width: 100%;
-}
-
 
 section > h1 {
   background: var(--icon);
   color: #333;
+}
+
+section > section {
+  display: none;
+}
+
+section > section.active {
+  display: flex;
 }
