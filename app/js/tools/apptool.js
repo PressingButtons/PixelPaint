@@ -12,6 +12,7 @@ const AppTool = function(config) {
 
   let tools = {
     pen : new Tools.GraphicPen(this),
+    pencil : new Tools.GraphicPencil(this),
     eraser: new Tools.Eraser(this),
   }
 
@@ -27,7 +28,11 @@ const AppTool = function(config) {
   }
 
   const changeBlend = event => {
-    blendMode = event.target.value
+    blendMode = event.detail;
+  }
+
+  const changeColor = event => {
+    color = event.detail;
   }
 
   const changeOpacity = event => {
@@ -88,6 +93,7 @@ const AppTool = function(config) {
   setScale(0.3);
   return {
     changeBlend: changeBlend,
+    changeColor: changeColor,
     changeOpacity: changeOpacity,
     changeSize: changeSize,
     changeTool: changeTool,

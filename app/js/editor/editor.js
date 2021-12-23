@@ -1,4 +1,3 @@
-import * as Palette from './palette.js';
 import * as Paper from './paper.js';
 import AppTool from '../tools/apptool.js';
 
@@ -11,14 +10,16 @@ const init = ( ) => {
   Paper.bindPaper('pointerdown', onPointerDown);
   Paper.bindPaper('pointermove', onPointerMove);
   Paper.bindPaper('pointerup', onPointerUp);
+  Paper.bindPaper('pointerenter', onPointerEnter);
+  Paper.bindPaper('pointerleave', onPointerLeave);
 }
 
 //Methods
 const moveCursor = mousePosition => {
-  const cursor = document.querySelector('#cursorImage');
+  const cursor = document.querySelector('.cursorcontainer');
   const position = new Position2D(mousePosition).ScalePosition(scale);
-  const str = `translate(${ position.x - cursor.width/2 | 0}px, ${position.y - cursor.height/2 | 0}px)`;
-  cursor.style.transform = str
+  const str = `translate(${ position.x|0}px, ${position.y| 0}px)`;
+  cursor.style.transform = str;
 }
 //Listeners
 const onColorSelect = event => {
@@ -34,18 +35,18 @@ const onHotKey = event => {
   if(key == 'e') document.getElementById('eraser').click( );
 }
 
-const onIconClick = function(event) {
-  selectTool(event.target.id, event.target);
-}
-
-const onOpacityChange = function(event) {
-  toolManager.opacity = ((event.target.value / 100) * 255);
-}
-
 const onPointerDown = function(event) {
   const position = parseRelativePosition(event);
   moveCursor(position);
   toolManager.cursorDown(position, event.pressure, Paper.getBuffer( ));
+}
+
+const onPointerEnter = function( ) {
+  $('.cursorcontainer').show( );
+}
+
+const onPointerLeave = function( ) {
+  $('.cursorcontainer').hide( );
 }
 
 const onPointerMove = function(event) {
@@ -60,32 +61,15 @@ const onPointerUp =  function(event) {
   toolManager.cursorUp(position, Paper.getCurrentLayer( ));
 }
 
-const onToolSizeChange = function(event) {
-  toolManager.setSize(event.target.value);
-  document.getElementById('toolSize').innerHTML = (event.target.value).toString().padStart(3, '0');
-  document.querySelector('#cursorImage').style.width = `${event.target.value}px`;
-}
-
-
-const selectTool = function(type, icon) {
-  if(type == "pen" || type == "eraser") {
-    toolManager.setTool(type);
-    hiliteIcon(icon);
-  }
-}
-
-
 const setListeners = ( ) => {
   document.addEventListener('brushBlendMode', toolManager.changeBlend);
   document.addEventListener('brushOpacity', toolManager.changeOpacity);
   document.addEventListener('brushSize', toolManager.changeSize);
   document.addEventListener('toolSelect', toolManager.changeTool);
-  document.addEventListener('colorselec', onColorSelect);
+  document.addEventListener('colorselect', toolManager.changeColor);
 }
 
 export default function( ) {
   Paper.init( );
-  Palette.init( );
-
   init( );
 }

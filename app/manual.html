@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Manual</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/manual.css">
+    <script type="text/javascript" src="./js/manual.js"></script>
+  </head>
+  <body>
+
+    <div class="manual">
+
+      <h1>SimpleSketchJS</h1>
+      <h2>User Guide</h2>
+
+      <section>
+        <h1>About</h1>
+        <p>
+          SimpleSketchJS is a javascript based digital painting application.
+          As the name suggests, the application features a concise toolset for users to create their paintings.
+          However, the plan is to expand the application as the opportunity arises.
+          Thank you for using SimpleSketchJS and enjoy!
+        </p>
+        <p>
+          This manual contains information regarding the features of SimpleSketchJS.
+        </p>
+      </section>
+
+      <section>
+        <h1>Tools</h1>
+        <p>
+          On the far left of the application is the Tool Pane.<br>
+          Right beside is the application interface which includes a tool context menu.<br>
+          Below are descriptions for each tool and their behavior.
+        </p>
+        <table>
+          <tr id='brush'>
+            <td><p>Brush</p></td>
+            <td><img src="./images/icons8-brush-60.png" alt=""></td>
+            <td>
+              <p>
+                <span>Currently not implemented</span><br>
+                A stroke based tool.
+                The brush tool differs from the Pen and Pencil Tool by having a baked in multiply feature.<br>
+              </p>
+            </td>
+          </tr>
+          <tr id='eraser'>
+            <td><p>Eraser</p></td>
+            <td><img src="./images/icons8-erase-64.png" alt=""></td>
+            <td>
+              <p>
+                A stroke based tool. Removes pixel data from a layer.
+              </p>
+            </td>
+          </tr>
+          <tr id='eyedropper'>
+            <td><p>Eye Dropper</p></td>
+            <td><img src="./images/icons8-dropper-64.png" alt=""></td>
+            <td>
+              <p>
+                Grabs a pixel color from a specific mouse point.
+              </p>
+            </td>
+          </tr>
+          <tr id='Pen'>
+            <td><p>Pen</p></td>
+            <td><img src="./images/icons8-pen-64.png" alt=""></td>
+            <td>
+              <p>
+                A stroke based tool. Performs strokes without any varience in opacity.<br>
+              </p>
+            </td>
+          </tr>
+          <tr id='Pencil'>
+            <td><p>Brush</p></td>
+            <td><img src="./images/icons8-pencil-64.png" alt=""></td>
+            <td>
+              <p>
+                A stroke based tool. Looser then the Pen tool, reacts to pen pressure applied.
+              </p>
+            </td>
+          </tr>
+          <tr id='zoom'>
+            <td><p>Magnify</p></td>
+            <td><img src="./images/icons8-search-48.png" alt=""></td>
+            <td>
+              <p>
+                <span>Currently not implemented</span><br>
+                Zoom's into a canvas based on the tool position. Holding Ctrl zoom's out.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </section>
+
+      <section id='hotkeys'>
+        <h1>Hot Keys</h1>
+        <table>
+          <tr><td><p>b</p></td><td><p>Selects the <a href="#brush">Brush</a> tool.</p></td></tr>
+          <tr><td><p>e</p></td><td><p>Selects the <a href="#eraser">Eraser</a> tool.</p></td></tr>
+          <tr><td><p>i</p></td><td><p>Selects the <a href="#eyedropper">Eye Dropper</a> tool.</p></td></tr>
+          <tr><td><p>p</p></td><td><p>Selects the <a href="#pen">Pen</a> tool.</p></td></tr>
+          <tr><td><p>P</p></td><td><p>Selects the <a href="#pencil">Pencil</a> tool.</p></td></tr>
+          <tr><td><p>z</p></td><td><p>Selects the <a href="#zoom">Zoom</a> tool.</p></td></tr>
+          <tr><td><p>[</p></td><td><p>Decreases the size of the active stroke based tool.</p></td></tr>
+          <tr><td><p>]</p></td><td><p>Increases the size of the active stroke based tool.</p></td></tr>
+          <tr><td><p>{</p></td><td><p>Decreases the opacity of the current stroke based tool by 10.</td></tr>
+          <tr><td><p>}</p></td><td><p>Increases the opacity of the current stroke based tool by 10.</p></td></tr>
+        </table>
+      </section>
+
+    </div>
+
+  </body>
+</html>

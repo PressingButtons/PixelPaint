@@ -2,9 +2,9 @@
 // Methods
 ///////////////////////////////////////////////////////
 const createPathConfig = (pen, context) => {
-
+  const opaqueValue = ((pen.opacity * /*pen.pressure*/ 1) | 0).toString(16).padStart(2, '0');
   const config = {
-    strokeStyle: pen.strokeStyle,
+    strokeStyle: pen.strokeStyle + opaqueValue,
     renderType: "destination-out",
     size: pen.size,
     positions: pen.positions,
@@ -30,9 +30,10 @@ EraserDownState.prototype.exitState = function(context) {
 
 EraserDownState.prototype.update = function(config){
   this.pen.logPosition(config.pos);
-  this.pen.pressure = 1;
+  //this.pen.pressure = 1;
   const path = createPathConfig(this.pen, config.context);
   renderPath(path);
+  while(this.pen.positions > 1) this.pen.positions.shift( );
 }
 
 ///////////////////////////////////////////////////////////////////////////

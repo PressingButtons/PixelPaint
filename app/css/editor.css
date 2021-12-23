@@ -137,3 +137,19 @@ section > section {
 section > section.active {
   display: flex;
 }
+
+.cursorcontainer {
+  display: none;
+}
+
+.cursorcontainer, .cursorcontainer > * {
+  position: absolute;
+}
+
+.cursorcontainer > svg {
+  transform: translate(-50%, -50%);
+}
+
+.cursorcontainer > img {
+  transform: translate(0%, -100%);
+}

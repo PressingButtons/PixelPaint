@@ -29,7 +29,7 @@ const updateColor = ( ) => {
 
 
 //exports
-export const init = ( ) => {
+export default function( ) {
   let num = 0;
   while(num < 20) {
     const color = document.createElement('div');

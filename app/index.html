@@ -11,23 +11,11 @@
     <script type="module" src='./js/index.js'></script>
   </head>
   <body>
-    <div class="taskbar">
-      <div class="dropdown">
-        <p>File</p>
-        <div class="content">
-          <p id='tnew'>New</p>
-          <p id='tsave'>Save</p>
-        </div>
-      </div>
-      <div class="dropdown">
-        <p>Edit</p>
-        <div class="content">
 
-        </div>
-      </div>
-      <div class="dropdown">
-        <p>Manual</p>
-      </div>
+    <iframe src="./manual.html"></iframe>
+
+    <div class="taskbar">
+      <p>Manual</p>
     </div>
 
     <div class="flex grow">
@@ -119,7 +107,12 @@
           <div class="layers" id="layers">
           </div>
           <canvas id="bufferCanvas" width="2480px" height="3508px"></canvas>
-          <img src="./images/icons8-circle-80.png" alt="" class='cursor' id='cursorImage'>
+          <div class="cursorcontainer">
+            <svg width="300" height="300">
+              <circle r="10" cx="50%" cy="50%" stroke="black" fill="none" strike-width="0.5"/>
+            </svg>
+            <img src="" alt="" class='cursor' id='cursorImage'>
+          </div>
         </div>
       </div>
 
