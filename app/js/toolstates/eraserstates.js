@@ -33,7 +33,7 @@ EraserDownState.prototype.update = function(config){
   //this.pen.pressure = 1;
   const path = createPathConfig(this.pen, config.context);
   renderPath(path);
-  while(this.pen.positions > 1) this.pen.positions.shift( );
+  while(this.pen.positions.length > 1) this.pen.positions.shift( );
 }
 
 ///////////////////////////////////////////////////////////////////////////

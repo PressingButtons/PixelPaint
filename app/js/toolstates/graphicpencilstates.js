@@ -2,10 +2,10 @@
 // Methods
 ///////////////////////////////////////////////////////
 const createPathConfig = (pen, context) => {
-  const opaqueValue = ((pen.opacity * /*pen.pressure*/ 1) | 0).toString(16).padStart(2, '0');
+  const opaqueValue = ((pen.opacity * pen.pressure) | 0).toString(16).padStart(2, '0');
   const config = {
     strokeStyle: pen.strokeStyle + opaqueValue,
-    renderType: "source-over",
+    renderType: pen.blendMode || "source-over",
     size: pen.size,
     positions: pen.positions,
     ctx: context,
@@ -18,6 +18,8 @@ const createPathConfig = (pen, context) => {
 //Graphic Pen States
 const GraphicPencilDownState = function(pen) {
   this.pen = pen;
+  this.pressure = this.pen.pressure;
+  this.prev = null;
 }
 
 GraphicPencilDownState.prototype.enterState = function(config) {
@@ -25,15 +27,15 @@ GraphicPencilDownState.prototype.enterState = function(config) {
 }
 
 GraphicPencilDownState.prototype.exitState = function(context) {
-
+  //this.pen.context.clearRect(0, 0, this.pen.context.canvas.width, this.pen.context.canvas.height);
 }
 
 GraphicPencilDownState.prototype.update = function(config){
   this.pen.logPosition(config.pos);
-  //this.pen.pressure = 1;
   const path = createPathConfig(this.pen, config.context);
   renderPath(path);
-  while(this.pen.positions > 1) this.pen.positions.shift( );
+  this.prev = positions.slice(0);
+  this.pen.positions = [this.pen.positions.pop()];
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -45,8 +47,8 @@ const GraphicPencilUpState = function(pen) {
 }
 
 GraphicPencilUpState.prototype.enterState = function(config) {
-  const path = createPathConfig(this.pen, config.context);
-  renderPath(path);
+  //const path = createPathConfig(this.pen, config.context);
+  //renderPath(path);
 }
 
 GraphicPencilUpState.prototype.exitState = function(config) {

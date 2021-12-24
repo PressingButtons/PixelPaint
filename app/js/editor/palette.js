@@ -9,6 +9,8 @@ const changeColor = function(event) {
 
 const selectColor = function(event) {
   const index = $(this).index( );
+  $('.color').removeClass('selected');
+  $(this).addClass('selected');
   if(!palette[index]) palette[index] = "#000000";
   document.dispatchEvent(new CustomEvent('colorselect', {detail: palette[index]}));
 }

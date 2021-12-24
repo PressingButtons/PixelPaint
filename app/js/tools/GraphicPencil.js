@@ -1,5 +1,5 @@
 import GraphicTool from './GraphicTool.js';
-import {GraphicPencilUpState, GraphicPencilDownState} from '../toolstates/GraphicPencilstates.js';
+import {GraphicPencilUpState, GraphicPencilDownState} from '../toolstates/graphicpencilstates.js';
 
 const GraphicPencil = function(config) {
   GraphicTool.call(this, config);

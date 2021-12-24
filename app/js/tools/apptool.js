@@ -22,7 +22,7 @@ const AppTool = function(config) {
 
   const update = (pos, pressure) => {
     if( currentTool ) {
-      if(currentTool != tools.eraser) currentTool.update(createConfig(pos, pressure, paper.getBuffer()));
+      if(currentTool == tools.pen) currentTool.update(createConfig(pos, pressure, paper.getBuffer()));
       else currentTool.update(createConfig(pos, pressure, paper.getCurrentLayer()));
     }
   }
