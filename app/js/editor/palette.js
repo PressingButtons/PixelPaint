@@ -1,4 +1,5 @@
 const palette = {0: "#FFFFFF"};
+let colorPicker;
 
 const colorInput = document.createElement('input');
 colorInput.setAttribute('type', 'color');
@@ -33,6 +34,8 @@ const updateColor = ( ) => {
 //exports
 export default function( ) {
   let num = 0;
+  colorPicker = new iro.ColorPicker('#picker', {width: 200});
+  colorPicker.on('color:change', onColorChange);
   while(num < 20) {
     const color = document.createElement('div');
     color.classList.add('color');

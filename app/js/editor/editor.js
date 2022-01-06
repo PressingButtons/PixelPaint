@@ -3,6 +3,7 @@ import AppTool from '../tools/apptool.js';
 
 let toolManager;
 let scale = 0.3;
+let currentLayer = 0;;
 
 const init = ( ) => {
   toolManager = new AppTool({size: 10, paper: Paper});
@@ -12,6 +13,7 @@ const init = ( ) => {
   Paper.bindPaper('pointerup', onPointerUp);
   Paper.bindPaper('pointerenter', onPointerEnter);
   Paper.bindPaper('pointerleave', onPointerLeave);
+  Paper.addLayer( );
 }
 
 //Methods
@@ -35,10 +37,17 @@ const onHotKey = event => {
   if(key == 'e') document.getElementById('eraser').click( );
 }
 
+const onLayerSelect = function(event) {
+  currentLayer = this.getAttribute('id');
+  $('#layerList div').removeClass('selected');
+  $(this).addClass('selected');
+}
+
 const onPointerDown = function(event) {
   const position = parseRelativePosition(event);
   moveCursor(position);
-  toolManager.cursorDown(position, event.pressure, Paper.getBuffer( ));
+  const config = {pressure: event.pressure, position: position, currentLayer: Paper.getLayer(currentLayer), bufferLayer: Paper.getBuffer()}
+  toolManager.cursorDown(config);
 }
 
 const onPointerEnter = function( ) {
@@ -52,13 +61,29 @@ const onPointerLeave = function( ) {
 const onPointerMove = function(event) {
   const position = parseRelativePosition(event);
   moveCursor(position);
-  toolManager.update(position, event.pressure, Paper);
+  const config = {pressure: event.pressure, position: position, currentLayer: Paper.getLayer(currentLayer), bufferLayer: Paper.getBuffer()}
+  toolManager.update(config);
 }
 
 const onPointerUp =  function(event) {
   const position = parseRelativePosition(event);
   moveCursor(position);
-  toolManager.cursorUp(position, Paper.getCurrentLayer( ));
+  const config = {pressure: event.pressure, position: position, currentLayer: Paper.getLayer(currentLayer), bufferLayer: Paper.getBuffer()}
+  toolManager.cursorUp(config);
+}
+
+const onNewLayer = function(event) {
+  event.detail.html.addEventListener('click', onLayerSelect);
+  document.querySelector('#layerList').appendChild(event.detail.html);
+  event.detail.html.dispatchEvent(new Event('click'));
+}
+
+const onUpdatePageDimensions = event => {
+  const width  = document.querySelector('input[name="width"]').value;
+  const height = document.querySelector('input[name="height"]').value;
+  if(confirm('Warning! Updating page dimensions will clear all layers.')) {
+    Paper.resize(width, height);
+  }
 }
 
 const setListeners = ( ) => {
@@ -67,6 +92,8 @@ const setListeners = ( ) => {
   document.addEventListener('brushSize', toolManager.changeSize);
   document.addEventListener('toolSelect', toolManager.changeTool);
   document.addEventListener('colorselect', toolManager.changeColor);
+  document.addEventListener('newlayer', onNewLayer);
+  document.querySelector('#updateDimBtn').addEventListener('click', onUpdatePageDimensions);
 }
 
 export default function( ) {

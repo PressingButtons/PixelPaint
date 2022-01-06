@@ -46,3 +46,9 @@ window.parseRelativePosition = event => {
   const rect = event.target.getBoundingClientRect( );
   return {x: event.clientX - rect.x, y: event.clientY - rect.y};
 }
+
+window.fetchText = url => {
+  return fetch(url).then(response => response.text());
+}
+
+window.domParser = new DOMParser( );

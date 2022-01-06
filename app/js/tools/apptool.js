@@ -4,11 +4,6 @@ const AppTool = function(config) {
 
   let currentTool;
   let toolIsDown = false;
-  let size = config.size;
-  let _opacity = 255;
-  let color = "#000000"
-  let paper = config.paper;
-  let blendMode = 'source-over'
 
   let tools = {
     pen : new Tools.GraphicPen(this),
@@ -28,7 +23,10 @@ const AppTool = function(config) {
   }
 
   const changeBlend = event => {
-    blendMode = event.detail;
+    if(currentTool) {
+      currentTool.blendMode = event.detail;
+      document.dispatchEvent(new CustomEvent('tooldata', {detail: currentTool}))
+    }
   }
 
   const changeColor = event => {
@@ -36,16 +34,25 @@ const AppTool = function(config) {
   }
 
   const changeOpacity = event => {
-    _opacity = (event.detail/100) * 255;
+    if(currentTool) {
+      currentTool.opacity = (event.detail/100) * 255;
+      document.dispatchEvent(new CustomEvent('tooldata', {detail: currentTool}))
+    }
   }
 
   const changeSize = event => {
-    size = event.detail;
+    if(currentTool) {
+      currentTool.size = event.detail;
+      document.dispatchEvent(new CustomEvent('tooldata', {detail: currentTool}))
+    }
   }
 
   const changeTool = event => {
     currentTool = tools[event.detail] || null;
-    if(currentTool) currentTool.currentState = currentTool.UpState;
+    if(currentTool) {
+      currentTool.currentState = currentTool.UpState;
+      document.dispatchEvent(new CustomEvent('tooldata', {detail: currentTool}))
+    }
   }
 
   const createConfig = function(pos, pressure, context) {
@@ -60,21 +67,24 @@ const AppTool = function(config) {
     }
   }
 
-  const cursorDown = ( ) => {
+  const cursorDown = config => {
     if(currentTool && currentTool != tools.eraser) currentTool.toDownState({context: paper.getBuffer(), opacity: _opacity});
     else if(currentTool && currentTool == tools.eraser) currentTool.toDownState({context: paper.getCurrentLayer()});
   }
 
-  const cursorUp = ( ) => {
+  const cursorUp = config => {
     if(currentTool) currentTool.toUpState(createConfig(null, 0, paper.getCurrentLayer()));
   }
 
-  const getSize = ( ) => {
-    return size;
+  const getSize = config => {
+    return currentTool.size || 0;
   }
 
   const setSize = n => {
-    size = n;
+    if(currentTool) {
+      currentTool.size = n;
+      document.dispatchEvent(new CustomEvent('tooldata', {detail: currentTool}));
+    }
   }
 
   const setMainContext = context => {
@@ -82,7 +92,6 @@ const AppTool = function(config) {
   }
 
   const setTool = type => {
-    console.log(type);
     currentTool = tools[type];
   }
 

@@ -11,3 +11,8 @@ const onReady = event => {
 }
 
 $(document).ready(onReady);
+
+//window binds
+window.requestNewLayer = ( ) => {
+  document.dispatchEvent(new Event('requestNewLayer'));
+}

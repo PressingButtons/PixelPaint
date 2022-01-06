@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/editor.css">
     <script type="text/javascript" src='./js/jquery.js'></script>
     <script type="module" src='./js/utils/global.js'></script>
+    <script type="module" src='./js/james-iro.js'></script>
     <script type="module" src='./js/index.js'></script>
   </head>
   <body>
@@ -50,6 +51,17 @@
         </div>
 
         <div class="flex col" style="border-right: 1px solid black;">
+        <!-- paper size -->
+        <section>
+          <h1>Paper Dimensions(px)</h1>
+          <div class="flex">
+            <p>width</p> <input type="text" name="width" value="2480" pattern="[0-9]{2,4}" autocomplete="off">
+          </div>
+          <div class="flex">
+            <p>height</p> <input type="text" name="height" value="3508" pattern="[0-9]{2,4}" autocomplete="off">
+          </div>
+          <button type="button" name="button" id='updateDimBtn'>Update</button>
+        </section>
         <!--Tool details -->
         <section>
           <h1>Tool Detail</h1>
@@ -85,6 +97,7 @@
         <!-- Palette Detail -->
         <section width="100%">
           <h1>Palette</h1>
+          <div id="picker"></div>
           <div class="palette"> </div>
         </section>
         <!-- Layers -->
@@ -92,7 +105,7 @@
           <h1>Layers</h1>
           <div class="buttons">
             <div class="icon" id="newLayer">
-              <img src="./images/icons8-add-64.png" alt="New Layer">
+              <img src="./images/icons8-add-64.png" alt="New Layer" onclick="requestNewLayer( );">
             </div>
           </div>
           <div class="flex col" id="layerList">

@@ -157,3 +157,21 @@ section > section.active {
 .cursorcontainer > img {
   transform: translate(0%, -100%);
 }
+
+#layerList canvas {
+  border: 1px solid black;
+}
+
+#layerList  div {
+  padding: 4px;
+  justify-content: flex-start;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+#layerList {
+  cursor: pointer;
+}
+
+#layerList div.selected {
+  border: 1px solid white;
+}

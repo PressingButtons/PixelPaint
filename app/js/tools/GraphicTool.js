@@ -10,6 +10,7 @@ const GraphicTool = function(config) {
   this.scale = 1;
   this.pressure = 1;
   this.opacity = 1;
+  this.blendMode = 'source-over';
 }
 
 GraphicTool.prototype.logPosition = function(pos) {

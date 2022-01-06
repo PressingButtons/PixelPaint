@@ -45,6 +45,10 @@ iframe {
   display: none;
 }
 
+button {
+  flex-basis: 0;
+}
+
 .flex {
   display: flex;
 }
