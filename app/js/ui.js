@@ -1,101 +1,71 @@
-import Palette from './editor/palette.js';
-//vars
-const brushes = ["pen", "pencil", "brush"];
+const htmlPrefabs = { };
 
-const brushSize = {min: 1, max: 200};
-const opacity =   {min: 1, max: 100};
-
-const initPageListeners = ( ) => {
-  $('.icon', "#toolpane").click(onToolClicked);
-  $('#opacityAdj').change(onOpacityChange);
-  $('#sizeAdj').change(onSizeChange);
-  $('#blendmode').change(onBrushBlendChange);
-  $('.taskbar p').click(onManualShow);
-  document.querySelector('iframe').contentDocument.addEventListener('exitManual', onExitManual);
-  document.addEventListener('keydown', onHotKeyDown);
+const initPrefabs = ( ) => {
+  const prefabs = [fetchText('../html/layer.html')]
+  return Promise.all(prefabs).then(html => {
+    htmlPrefabs.layer = html[0];
+  })
 }
 
-//methods
-const changeBrushSVGSize = value => {
-  const brushSVG = document.querySelector('.cursorcontainer svg');
-  const circle = brushSVG.querySelector('circle');
-  circle.setAttribute('r', (value/2) | 0);
+const setListeners = ( ) => {
+  document.addEventListener('zoomLevel', listeners.onZoomLevel);
+  document.addEventListener('newLayer', listeners.onNewLayer);
+  document.addEventListener('layerClick', listeners.onLayerClick);
+  document.addEventListener('toolData', listeners.onToolData);
+  document.addEventListener('brushType', listeners.onBrushTypeChange);
 }
 
-const changeMouseIcon = type => {
-  const cursorImage = document.querySelector('#cursorImage');
-  switch (type) {
-    case  "pen": cursorImage.src = "./images/icons8-pen-64.png"; break;
-    case  "pencil": cursorImage.src = "./images/icons8-pencil-64.png"; break;
-    case  "eraser": cursorImage.src = "./images/icons8-erase-64.png"; break;
-  }
+const listeners = { };
+
+listeners.onBrushTypeChange = function(event) {
+  const iconList = document.querySelector('.iconList');
+  $('div', iconList).removeClass('selected');
+  $('div', iconList)[event.detail].classList.add('selected');
 }
 
-const contextualTool = type => {
-  $('section > section').removeClass('active');
-  if(brushes.indexOf(type) != -1) {
-    $('section > section').addClass('active');
-  } else if(type =='eraser') {
-    $('#opacitySection').addClass('active');
-    $('#sizeSection').addClass('active');
-  } else {
-
-  }
-  changeMouseIcon(type);
+listeners.onNewLayer = event => {
+  const tr = methods.setTableRow(event.detail.index);
+  methods.setRowBinds(tr, event);
+  tr.dispatchEvent(new Event('click'));
 }
 
-const triggerChange = (query, value) => {
-  let newValue = Number(document.querySelector(query).value) + value;
-  document.querySelector(query).value  = newValue;
-  document.querySelector(query).dispatchEvent(new Event('change'));
-  document.querySelector(query).blur( );
-}
-//Listeners
-const onBrushBlendChange = function(event) {
-  document.dispatchEvent(new CustomEvent('brushBlendMode', {detail: this.value}));
+listeners.onZoomLevel = event => {
+  const value = (event.detail * 100).toFixed(2)
+  document.querySelector('#zoomLevel').value = value
 }
 
-const onExitManual = function(event) {
-  $('iframe').hide( );
+listeners.onLayerClick = function(event, index) {
+  const table = document.querySelector('#layerTable');
+  $('.pencil', table).removeClass('active');
+  $('.pencil', event.currentTarget).addClass('active');
+  document.dispatchEvent(new CustomEvent('layerSelect', {detail: index}));
 }
 
-const onHotKeyDown = function(event) {
-  const key = event.key.toLowerCase( );
-  if(key == 'p') document.getElementById('pencil').click( );
-  if(key == 'p' && event.shiftKey) document.getElementById('pen').click( );
-  if(key == 'e') document.getElementById('eraser').click( );
-  if(key == '[') triggerChange('#sizeAdj', -10);
-  if(key == ']') triggerChange('#sizeAdj',  10);
-  if(key == '{') triggerChange('#opacityAdj', -10);
-  if(key == '}') triggerChange('#opacityAdj',  10);
+listeners.onToolData = function(event) {
+  document.querySelector('select[name="brushBlend"]').value = event.detail.blendMode;
+  document.querySelector('input[name="brushSizeNumber"]').value = event.detail.size;
+  document.querySelector('input[name="brushSizeNumber"]').dispatchEvent(new Event('change'));
+  document.querySelector('input[name="brushOpacityNumber"]').value = event.detail.opacity;
+  document.querySelector('input[name="brushOpacityNumber"]').dispatchEvent(new Event('change'));
 }
 
-const onManualShow = function(event) {
-  $('iframe').show( );
+const methods = { };
+
+methods.setRowBinds = function(tr, event) {
+  tr.addEventListener('click', ev => listeners.onLayerClick(ev, event.detail.index));
+  tr.querySelector('')
 }
 
-const onOpacityChange = function(event) {
-  if(this.value < opacity.min) this.value = opacity.min
-  if(this.value > opacity.max) this.value = opacity.max
-  document.dispatchEvent(new CustomEvent('brushOpacity', {detail: this.value}))
-}
-
-const onSizeChange = function(event) {
-  if(this.value < brushSize.min) this.value = brushSize.min;
-  if(this.value > brushSize.max) this.value = brushSize.max;
-  changeBrushSVGSize(this.value);
-  document.dispatchEvent(new CustomEvent('brushSize', {detail: this.value}));
-}
-
-const onToolClicked = function(event) {
-  $('.icon', "#toolpane").removeClass('active');
-  $(this).addClass('active');
-  contextualTool(this.id);
-  document.dispatchEvent(new CustomEvent('toolSelect', {detail: this.id}));
+methods.setTableRow = function(index) {
+  const table = document.querySelector('#layerTable');
+  const tr = document.createElement('tr');
+  tr.innerHTML = htmlPrefabs.layer;
+  table.insertBefore(tr, table.firstChild);
+  tr.querySelector('input').value = "Layer" + event.detail.index;
+  return tr;
 }
 
 //export
 export default function( ) {
-  initPageListeners( );
-  Palette( );
+  return initPrefabs( ).then(setListeners);
 }

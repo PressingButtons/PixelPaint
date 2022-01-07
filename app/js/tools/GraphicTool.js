@@ -1,44 +1,26 @@
-const DEFAULT = {
-  SIZE: 10
-}
-
 const GraphicTool = function(config) {
-  this.size = config.size || DEFAULT.SIZE;
-  this.currentState;
-  this.context;
-  this.positions = [ ];
-  this.scale = 1;
-  this.pressure = 1;
-  this.opacity = 1;
+  this.machine = config.machine;
+  this.size = config.size;
   this.blendMode = 'source-over';
+  this.pointLog = [];
+  this.currentState;
+  this.opacity = 100;
+  this.states = { };
 }
 
-GraphicTool.prototype.logPosition = function(pos) {
-  this.positions.push(new Position2D(pos));
+Object.defineProperties(GraphicTool.prototype, {
+  DOWN: {value: 1},
+  UP: {value: 0},
+})
+
+GraphicTool.prototype.switchState = function(switchID) {
+  if(this.currentState) this.currentState.exitState( );
+  this.states[switchID].enterState( );
+  this.currentState = this.states[switchID];
 }
 
-GraphicTool.prototype.update = function(config) {
-  this.context = config.context;
-  this.size = config.size || this.size;
-  this.opacity = config.opacity || this.opacity;
-  this.pressure = config.pressure || this.pressure;
-  this.strokeStyle = config.strokeStyle || this.strokeStyle;
-  this.blendMode = config.blendMode || "source-over";
-  this.currentState.update({pos: config.pos, context: this.context});
-}
-
-GraphicTool.prototype.toDownState = function(config) {
-  this.currentState.exitState(config);
-  this.currentState = this.DownState;
-  this.currentState.enterState(config);
-  this.context = config.context;
-}
-
-GraphicTool.prototype.toUpState = function(config) {
-  this.currentState.exitState(config);
-  this.currentState = this.UpState;
-  this.currentState.enterState(config);
-  this.context = config.context;
+GraphicTool.prototype.update = function(event) {
+  this.currentState.update(event);
 }
 
 export default GraphicTool;

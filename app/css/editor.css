@@ -1,177 +1,205 @@
 :root {
-  --icon: #AAA;
-  --iconHi: #CCC;
-}
-
-section div.flex {
-  justify-content: space-between;
+  --mainColor: #101020;
+  --headerColor: #AA3;
+  --workspaceBG: #40404A;
+  --uiBGColor: #F0E0A0;
+  --uiFontColor: #604020;
 }
 
 input {
-  width: 100px;
+  border: none;
+  border-bottom:  1px solid var(--mainColor);
 }
 
-.buttons {
-  background: rgba(0, 0, 0, 0.4);
-  color: var(--fontColor);
-  display: flex;
+section {
+  border-bottom: solid 1px var(--mainColor);
+  padding-bottom: 8px;
 }
 
-.ipane {
-  background: var(--plateColor);
-}
-
-.workspace {
-  overflow: hidden;
+#workspace {
+  background: var(--workspaceBG);
+  overflow: auto;
   flex:1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .paper {
-  height: 3508px;
-  width: 2480px;
   background: white;
-  transform-origin: 0 0;
-  transform: scale(0.3);
-  cursor: crosshair;
+  position: absolute;
+  transform-origin: 50% 50%;
 }
+
 .paper canvas {
   position: absolute;
-  z-index: 1;
-  touch-action: none;
 }
 
-.icons {
-  margin: 10px;
-  border-radius: 5px;
-  padding: 10px;
-  background: var(--icon);
+#user_interface {
+  width: 320px;
+  max-width: 320px;
+  border-left: 2px solid rgba(0, 0, 0, 0.8);
 }
 
-.icons img {
-  display: none;
-  width: 32px;
-  height: 32px;
+#user_interface h1 {
+  background: var(--uiBGColor);
+  color: var(--uiFontColor);
 }
 
-.icons img.active {
-  display: block;
+#user_interface .tableContainer {
+  background: rgba(0, 0, 0, 0.10);
 }
 
+.tableContainer table {
+  width: 100%;
+  font-size: 0.8em;
+}
+
+.tableContainer input {
+  width: 55px;
+}
+
+.tableContainer p, .tableContainer input {
+  padding: 0;
+  margin: 2px;
+}
+
+
+.btop {
+  border-top: 1px solid var(--mainColor);
+}
+
+
+.opacityDetail {
+  width: 150px;
+}
+
+.opacityDesign {
+  width: 100%;
+  height: 15px;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  background-color: #AAA;
+  background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10pxs, 10px -10px, -10px 0px;
+  border: 1px solid var(--mainColor);
+}
+
+.opacityGradient {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(-90deg, #FFF 0%, transparent 100%);
+}
+
+.opacitySlider input[name="layerOpacitySlider"] {
+  width: 100%;
+  position: absolute;
+  transform: translate(-3px, 0);
+}
+
+.opacitySlider input[name="layerOpacityNumber"] {
+  width: 50px;
+}
+
+/*
+  ICON RULES ====================================
+*/
 
 .icon {
-  margin: 10px;
-  border-radius: 5px;
-  padding: 10px;
-  background: var(--icon);
   cursor: pointer;
 }
 
-
-.buttons .icon {
-  padding: 2px;
-}
-
-
-.icon:hover, .icon.active {
-  background:  var(--iconHi);
-}
-
-.icon img, .buttons img {
-  width: 32px;
-  height: 32px;
+.icon img {
+  width: 30px;
+  height: 30px;
 }
 
 .icon p {
-  color: black;
-}
-
-
-.cursor {
   position: absolute;
+  display: none;
+  border: 1px solid var(--uiFontColor);
+  color: var(--uiFontColor);
+  background: var(--uiBGColor);
+  z-index: 1;
 }
 
-.section, section {
-  border-bottom: 1px solid black;
-  display: flex;
-  flex-flow: column nowrap;
+.icon:hover p {
+  display: block;
 }
 
-
-.palette {
-  margin: 0;
-  padding: 3px;
-  width: 220px;
+.iconList .icon {
+  display: none;
 }
 
-div.color {
-  border: 1px solid black;
-  width: 32px;
-  height: 32px;
-  margin: 1px;
-  display: inline-flex;
+.iconList .icon.selected {
+  display: block;
 }
 
-div.color.selected {
-  border: 1px dashed white;
-}
-
-.preview {
-  height: 40px;
-  background-image: linear-gradient(45deg, #808080 25%, transparent 25%), linear-gradient(-45deg, #808080 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #808080 75%), linear-gradient(-45deg, transparent 75%, #808080 75%);
+.iconBox {
+  width: 20px;
+  height: 20px;
+  margin: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
   background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-  display: flex;
-}
-
-.gradient {
-  flex:1;
-  background: linear-gradient(-90deg, #000000, transparent)
-}
-
-
-section > h1 {
-  background: var(--icon);
-  color: #333;
-}
-
-section > section {
-  display: none;
-}
-
-section > section.active {
-  display: flex;
-}
-
-.cursorcontainer {
-  display: none;
-}
-
-.cursorcontainer, .cursorcontainer > * {
-  position: absolute;
-}
-
-.cursorcontainer > svg {
-  transform: translate(-50%, -50%);
-}
-
-.cursorcontainer > img {
-  transform: translate(0%, -100%);
-}
-
-#layerList canvas {
-  border: 1px solid black;
-}
-
-#layerList  div {
-  padding: 4px;
-  justify-content: flex-start;
-  border: 1px solid rgba(0, 0, 0, 0.4);
-}
-
-#layerList {
   cursor: pointer;
 }
 
-#layerList div.selected {
-  border: 1px solid white;
+.iconBox.sight.active {
+  background-image: url("../images/icons8-eye-60.png");
+}
+
+.iconBox.pencil.active {
+  background-image: url("../images/icons8-pencil-64.png");
+}
+
+.iconBox.broom {
+  background-image: url("../images/icons8-sweep-60.png");
+}
+
+.iconBox.trash {
+  background-image: url("../images/icons8-delete-64.png");
+}
+
+
+/* COLOR PALETTE STUFFS */
+.palette {
+  flex-wrap: wrap;
+  flex: 1;
+  height: 250px;
+}
+
+.palette > div {
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+  border: 2px solid black;
+}
+
+.palette > div.selected {
+  border: 2px double red;
+}
+
+/*
+====================================== WORKSPACE ZOOM
+*/
+.zoomDetail {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.zoomDetail input {
+  border: 2px solid var(--uiFontColor);
+  background: var(--uiBGColor);
+  width: 70px;
+  margin: 0;
+}
+
+.zoomDetail p {
+  background: #888;
+  border: 2px solid var(--mainColor);
+  border-right: none;
 }

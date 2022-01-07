@@ -1,8 +1,17 @@
-window.createCanvasContext = config => {
+//variables
+Object.defineProperties(window, {
+  brushMin: {value: 1},
+  brushMax: {value: 2000}
+})
+//methods
+
+window.createCanvasObject = config => {
   const canvas = document.createElement('canvas');
-  canvas.width = config.width;
-  canvas.height = config.height;
-  return canvas.getContext('2d', config.options);
+  canvas.width = config.w
+  canvas.height = config.h
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
+  return {canvas: canvas, ctx: ctx};
 }
 
 
@@ -26,6 +35,11 @@ Position2D.prototype.Set = function(value) {
 }
 
 window.Position2D = Position2D;
+
+window.positionFromMouseEvent = event => {
+  const rect = event.target.getBoundingClientRect( );
+  return {x: ((event.clientX - rect.x) / getZoom( )) | 0, y: ((event.clientY - rect.y) / getZoom( )) | 0};
+}
 
 window.renderPath = config => {
   config.ctx.strokeStyle = config.strokeStyle;
@@ -52,3 +66,51 @@ window.fetchText = url => {
 }
 
 window.domParser = new DOMParser( );
+
+window.fetchHTML = url => {
+  return fetchText(url).then(html => {
+    return domParser.parseFromString(html, 'text/html').body.children;
+  })
+}
+
+window.onLayerBlendChange = function(element) {
+
+}
+
+window.onBrushOpacityChange = function(element) {
+  const value = element.value;
+  document.querySelector('input[name="brushOpacitySlider"]').value = value;
+  document.querySelector('input[name="brushOpacityNumber"]').value = value;
+  document.dispatchEvent(new CustomEvent('brushOpacityChange', {detail: value}));
+}
+
+window.onBrushSizeChange = function(element) {
+  const value = element.value;
+  document.querySelector('input[name="brushSizeSlider"]').value = value;
+  document.querySelector('input[name="brushSizeNumber"]').value = value;
+  document.dispatchEvent(new CustomEvent('brushSizeChange', {detail: value}));
+}
+
+
+window.onBrushTypeChange = function(event) {
+  document.dispatchEvent(new CustomEvent('brushType', {detail: event.value}))
+}
+
+window.onLayerOpacityChange = function(element) {
+  const value = element.value;
+  document.querySelector('input[name="layerOpacitySlider"]').value = value;
+  document.querySelector('input[name="layerOpacityNumber"]').value = value;
+  document.dispatchEvent(new CustomEvent('layerOpacityChange', {detail: value}));
+}
+
+window.onLayerSelect = function(event) {
+  document.dispatchEvent(new CustomEvent('layerSelect', {detail: event}));
+}
+
+window.onZoomChange = function(element) {
+  document.dispatchEvent(new CustomEvent('zoomChange', {detail: element.value}))
+}
+
+window.requestNewLayer = function( ) {
+  document.dispatchEvent(new Event('requestNewLayer'));
+}

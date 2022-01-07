@@ -1,8 +1,5 @@
 :root {
-  --bgColor: #222;
-  --plateColor: #333;
-  --plateHi: #555;
-  --fontColor: #AAA;
+  --bgColor: #FFF;
 }
 
 body, html {
@@ -14,8 +11,6 @@ body {
   font-family: Tahoma;
   background: var(--bgColor);
   color: var(--fontColor);
-  display: flex;
-  flex-flow: column nowrap;
 }
 
 div {
@@ -45,26 +40,12 @@ iframe {
   display: none;
 }
 
-button {
-  flex-basis: 0;
-}
-
 .flex {
   display: flex;
 }
 
-.taskbar {
-  display: flex;
-  background: var(--plateColor);
-  border-bottom: 1px solid black;
-}
-
-.taskbar p {
-  cursor: pointer;
-}
-
-.taskbar p:hover {
-  background: var(--plateHi);
+.flex section {
+  flex:1;
 }
 
 .dropdown {
@@ -90,9 +71,45 @@ button {
 }
 
 .col {
-  flex-flow: column nowrap;
+  flex-flow: column;
 }
 
 .grow {
   flex: 1;
+}
+
+.spaced { justify-content:  space-between;}
+
+.app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.flex.reverse:not(.col) {
+  flex-direction: row-reverse;
+}
+
+.flex.reverse.col {
+  flex-direction: column-reverse;
+}
+
+.flex.reverse .icon p {
+  right: 0;
+}
+
+.tableContainer {
+  overflow: auto;
+}
+.padded {
+  padding: 6px;
+}
+
+table tr {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+tr td:not(:last-child) {
+  border-right: 1px solid rgba(0, 0, 0, 0.5);
+  position: relative;
 }

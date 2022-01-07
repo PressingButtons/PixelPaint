@@ -4,16 +4,15 @@ import {GraphicPenUpState, GraphicPenDownState} from '../toolstates/graphicpenst
 const GraphicPen = function(config) {
   GraphicTool.call(this, config);
   this.init(config);
+  this.switchState(this.UP);
 }
 
 GraphicPen.prototype = Object.create(GraphicTool.prototype);
 GraphicPen.prototype.constructor = GraphicPen;
 
 GraphicPen.prototype.init = function(config) {
-  this.strokeStyle = config.strokeStyle || '#000000';
-  this.DownState = new GraphicPenDownState(this);
-  this.UpState = new GraphicPenUpState(this);
-  this.scale = config.scale || 0.3;
+  this.states[1] = new GraphicPenDownState(this);
+  this.states[0] = new GraphicPenUpState(this);
 }
 
 

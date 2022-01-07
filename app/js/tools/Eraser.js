@@ -4,16 +4,15 @@ import {EraserUpState, EraserDownState} from '../toolstates/eraserstates.js';
 const Eraser = function(config) {
   GraphicTool.call(this, config);
   this.init(config);
+  this.switchState(this.UP);
 }
 
 Eraser.prototype = Object.create(GraphicTool.prototype);
 Eraser.prototype.constructor = Eraser;
 
 Eraser.prototype.init = function(config) {
-  this.strokeStyle = config.strokeStyle || '#000000';
-  this.DownState = new EraserDownState(this);
-  this.UpState = new EraserUpState(this);
-  this.scale = config.scale || 0.3;
+  this.states[1] = new EraserDownState(this);
+  this.states[0] = new EraserUpState(this);
 }
 
 

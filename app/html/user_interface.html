@@ -1,0 +1,152 @@
+<div class="flex grow col">
+
+  <!--
+    Canvas Dimensions
+  -->
+  <section>
+    <h1>Canvas Size</h1>
+
+    <div class="flex spaced">
+      <p>Width</p>
+      <input type="text" name="width" value="2400" autocomplete="off" pattern="[0-9]{2,4}">
+    </div>
+    <div class="flex spaced">
+      <p>height</p>
+      <input type="text" name="width" value="3500" autocomplete="off" pattern="[0-9]{2,4}">
+    </div>
+    <button type="button" name="canvasDimBtn" onclick="canvasUpdateDim( )">Update</button>
+
+  </section>
+
+
+  <!--
+    Brush Tool
+  -->
+  <section>
+    <h1> Brush Tool</h1>
+
+    <div class="flex">
+      <!-- brush type -->
+      <div class="flex padded">
+        <div class="iconList">
+          <div class="icon"><img src="../images/icons8-erase-64.png" alt="Pencil"><p>Pen</p></div>
+          <div class="icon selected"><img src="../images/icons8-pencil-64.png" alt="Pencil"><p>Pencil</p></div>
+          <div class="icon"><img src="../images/icons8-pen-64.png" alt="Pencil"><p>Pen</p></div>
+        </div>
+        <select class="" name="brushType" onchange="onBrushTypeChange(this)">
+          <option value="1">Pencil</option>
+          <option value="2">Pen</option>
+          <option value="0">Eraser</option>
+        </select>
+      </div>
+      <!-- brush blend -->
+      <select class="" name="brushBlend" onchnage="onBrushBlendChange(this);">
+        <option value="source-over">Normal</option>
+        <option value="darken">Darken</option>
+        <option value="multiply">Multiply</option>
+        <option value="lighter">Lighten</option>
+        <option value="screen">Screen</option>
+        <option value="overlay">Overlay</option>
+        <option value="color-dodge">ColorDodge</option>
+        <option value="color-burn">ColorBurn</option>
+        <option value="hard-light">Hard Light</option>
+        <option value="soft-light">Soft Light</option>
+        <option value="difference">Difference</option>
+        <option value="exclusion">exclusion</option>
+        <option value="hue">Hue</option>
+        <option value="saturation">Saturation</option>
+        <option value="color">Color</option>
+        <option value="luminosity">Luminosity</option>
+      </select>
+    </div>
+
+
+    <div class="flex padded">
+      <p>Size</p>
+      <div class="sliderGroup">
+        <input type="range" name="brushSizeSlider" value="10" min="1" max="2000" onchange="onBrushSizeChange(this);">
+        <input type="number" name="brushSizeNumber" value="10" min="1" max="2000" onchange="onBrushSizeChange(this);">
+      </div>
+    </div>
+
+    <div class="flex padded">
+      <p>Opacity</p>
+      <div class="sliderGroup">
+        <input type="range" name="brushOpacitySlider" value="100" min="1" max="100" onchange="onBrushOpacityChange(this);">
+        <input type="number" name="brushOpacityNumber" value="100" min="1" max="100" onchange="onBrushOpacityChange(this);">
+      </div>
+    </div>
+
+  </section>
+
+  <!--
+    Color picker
+  -->
+  <section>
+    <h1>Color</h1>
+    <div class="flex">
+      <div id="colorPicker"></div>
+      <div class="palette flex col" id='palette'></div>
+    </div>
+  </section>
+
+</div>
+
+<!---
+ LOWER HALF
+ LAYERS
+-->
+<div class="flex col grow btop">
+
+  <h1>Layers</h1>
+
+  <div class="layer navigation flex col">
+
+    <div class="flex">
+      <select class="" name="layerBlendMode" onchange="onLayerBlendChange(this);">
+        <option value="source-over">Normal</option>
+        <option value="darken">Darken</option>
+        <option value="multiply">Multiply</option>
+        <option value="lighter">Lighten</option>
+        <option value="screen">Screen</option>
+        <option value="overlay">Overlay</option>
+        <option value="color-dodge">ColorDodge</option>
+        <option value="color-burn">ColorBurn</option>
+        <option value="hard-light">Hard Light</option>
+        <option value="soft-light">Soft Light</option>
+        <option value="difference">Difference</option>
+        <option value="exclusion">exclusion</option>
+        <option value="hue">Hue</option>
+        <option value="saturation">Saturation</option>
+        <option value="color">Color</option>
+        <option value="luminosity">Luminosity</option>
+      </select>
+      <!--opacity range -->
+      <div class="opacitySlider flex">
+        <div class="opacityDetail">
+          <div class="opacityDesign">
+            <div class="opacityGradient"></div>
+          </div>
+          <input type="range" name="layerOpacitySlider" value="100" min="0" max="100" class="slider" id="layerOpacitySlider" onchange="onLayerOpacityChange(this);">
+        </div>
+        <input type="number" name="layerOpacityNumber" value="100" id="layerOpacityNumber" onchange="onLayerOpacityChange(this);">
+      </div>
+    </div>
+
+    <!-- layer buttons -->
+    <div class="flex reverse layerIcons">
+      <div class="icon" onclick='deleteLayer( );'><img src="../images/icons8-delete-64.png" alt=""><p>Delete</p></div>
+      <div class="icon" onclick='mergeLayers( );'><img src="../images/icons8-merge-40.png" alt="Merge"><p>Merge</p></div>
+      <div class="icon" onclick="requestNewLayer( );"><img src="../images/icons8-layers-64.png" alt="New Layer"><p>New Layer</p></div>
+    </div>
+
+  </div>
+
+  <div class="grow layer tableContainer">
+    <table id='layerTable' class='grow'>
+    </table>
+  </div>
+
+
+
+</div>

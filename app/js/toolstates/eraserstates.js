@@ -1,27 +1,10 @@
-////////////////////////////////////////////////////////
-// Methods
-///////////////////////////////////////////////////////
-const createPathConfig = (pen, context) => {
-  const opaqueValue = ((pen.opacity * /*pen.pressure*/ 1) | 0).toString(16).padStart(2, '0');
-  const config = {
-    strokeStyle: pen.strokeStyle + opaqueValue,
-    renderType: "destination-out",
-    size: pen.size,
-    positions: pen.positions,
-    ctx: context,
-    scale: pen.scale,
-    lineCap: 'round'
-  }
-  return config;
-}
-
 //Graphic Pen States
 const EraserDownState = function(pen) {
   this.pen = pen;
 }
 
 EraserDownState.prototype.enterState = function(config) {
-  this.pen.positions = [];
+  this.pen.pointLog = [];
 }
 
 EraserDownState.prototype.exitState = function(context) {
@@ -29,11 +12,9 @@ EraserDownState.prototype.exitState = function(context) {
 }
 
 EraserDownState.prototype.update = function(config){
-  this.pen.logPosition(config.pos);
-  //this.pen.pressure = 1;
-  const path = createPathConfig(this.pen, config.context);
-  renderPath(path);
-  while(this.pen.positions.length > 1) this.pen.positions.shift( );
+  this.pen.pointLog.push(event.detail.pos);
+  this.pen.blendMode = 'destination-out';
+  this.pen.machine.dispatchPath('path', this.pen);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -45,12 +26,11 @@ const EraserUpState = function(pen) {
 }
 
 EraserUpState.prototype.enterState = function(config) {
-  const path = createPathConfig(this.pen, config.context);
-  renderPath(path);
+  this.pen.pointLog = [];
 }
 
 EraserUpState.prototype.exitState = function(config) {
-
+  this.pen.pointLog = [];
 }
 
 EraserUpState.prototype.update = function(config) {
