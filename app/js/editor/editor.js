@@ -1,6 +1,6 @@
 import ToolKit from '../tools/toolkit.js';
 let toolkit;
-let currentLayer = 0;
+let currentLayer = null;
 
 const init = ( ) => {
   toolkit = new ToolKit( );
@@ -48,6 +48,7 @@ listeners.onPlotPath = event => {
 
 listeners.onLayerSelect = event => {
   currentLayer = event.detail;
+  window.currentLayer = currentLayer;
 }
 
 listeners.onPointerEvent = function(event) {

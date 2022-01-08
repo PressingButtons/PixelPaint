@@ -8,11 +8,11 @@
 
     <div class="flex spaced">
       <p>Width</p>
-      <input type="text" name="width" value="2400" autocomplete="off" pattern="[0-9]{2,4}">
+      <input type="text" name="canvasWidth" value="2400" autocomplete="off" pattern="[0-9]{2,4}">
     </div>
     <div class="flex spaced">
       <p>height</p>
-      <input type="text" name="width" value="3500" autocomplete="off" pattern="[0-9]{2,4}">
+      <input type="text" name="canvasHeight" value="3500" autocomplete="off" pattern="[0-9]{2,4}">
     </div>
     <button type="button" name="canvasDimBtn" onclick="canvasUpdateDim( )">Update</button>
 
@@ -135,7 +135,7 @@
 
     <!-- layer buttons -->
     <div class="flex reverse layerIcons">
-      <div class="icon" onclick='deleteLayer( );'><img src="../images/icons8-delete-64.png" alt=""><p>Delete</p></div>
+      <div class="icon" onclick='deleteLayers( );'><img src="../images/icons8-delete-64.png" alt=""><p>Delete</p></div>
       <div class="icon" onclick='mergeLayers( );'><img src="../images/icons8-merge-40.png" alt="Merge"><p>Merge</p></div>
       <div class="icon" onclick="requestNewLayer( );"><img src="../images/icons8-layers-64.png" alt="New Layer"><p>New Layer</p></div>
     </div>

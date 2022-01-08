@@ -117,7 +117,7 @@ section {
   height: 30px;
 }
 
-.icon p {
+.icon p, .iconBox > p {
   position: absolute;
   display: none;
   border: 1px solid var(--uiFontColor);
@@ -126,7 +126,7 @@ section {
   z-index: 1;
 }
 
-.icon:hover p {
+.icon:hover p, .iconBox:hover > p {
   display: block;
 }
 
@@ -145,6 +145,11 @@ section {
   border: 1px solid rgba(0, 0, 0, 0.5);
   background-size: 20px 20px;
   cursor: pointer;
+}
+
+.iconBox > p {
+  top: 20px;
+  z-index: 10;
 }
 
 .iconBox.sight.active {

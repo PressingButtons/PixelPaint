@@ -17,7 +17,8 @@ const onReady = event => {
 const init = ( ) => {
   Palette( );
   Zoom( );
-  UI( ).then(Paper).then(Editor);
+  Editor( );
+  UI( ).then(Paper);
   HotKeys( );
 }
 

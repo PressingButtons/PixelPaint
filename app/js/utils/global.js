@@ -11,9 +11,9 @@ window.createCanvasObject = config => {
   canvas.height = config.h
   const ctx = canvas.getContext('2d');
   ctx.imageSmoothingEnabled = false;
+  canvas.style.opacity = 1;
   return {canvas: canvas, ctx: ctx};
 }
-
 
 const Position2D = function(pos) {
   this.x = pos.x || pos[0] || 0;
@@ -113,4 +113,22 @@ window.onZoomChange = function(element) {
 
 window.requestNewLayer = function( ) {
   document.dispatchEvent(new Event('requestNewLayer'));
+}
+
+window.canvasUpdateDim = function(element) {
+  const value = { };
+  value.w =  document.querySelector('input[name="canvasWidth"]').value;
+  value.h =  document.querySelector('input[name="canvasHeight"]').value;
+  if(confirm('Resizing the canvas will clear all layers. Continue?'))
+  document.dispatchEvent(new CustomEvent('paperResize', {detail: value}));
+}
+
+window.mergeLayers = function(element) {
+  if(confirm('Merge current active layer with layer below?'))
+    document.dispatchEvent(new Event('mergeLayer'));
+}
+
+window.deleteLayers = function(element) {
+  if(confirm('Delete all current layers?'))
+    document.dispatchEvent(new Event('deleteLayers'));
 }

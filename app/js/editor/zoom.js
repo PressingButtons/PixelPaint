@@ -31,14 +31,14 @@ const mousePosition = event => {
 }
 
 const increaseZoom = (inc) => {
-  if(zoom < zMax) zoom += Math.abs(inc) * 0.1;
+  if(zoom < zMax) zoom += Math.abs(inc) * 0.01;
   else zoom = zMax;
   paper.style.transform = `scale(${zoom})`
 }
 
 
 const decreaseZoom = (dec) => {
-  if(zoom > zMin) zoom -= Math.abs(dec) * 0.1;
+  if(zoom > zMin) zoom -= Math.abs(dec) * 0.01;
   else zoom = zMin;
   paper.style.transform = `scale(${zoom})`
 }
