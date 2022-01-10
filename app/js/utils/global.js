@@ -74,7 +74,7 @@ window.fetchHTML = url => {
 }
 
 window.onLayerBlendChange = function(element) {
-
+  document.dispatchEvent(new CustomEvent('layerBlend', {detail: element.value}))
 }
 
 window.onBrushOpacityChange = function(element) {
@@ -124,11 +124,23 @@ window.canvasUpdateDim = function(element) {
 }
 
 window.mergeLayers = function(element) {
-  if(confirm('Merge current active layer with layer below?'))
+  if(confirm('Merge current layers?'))
     document.dispatchEvent(new Event('mergeLayer'));
 }
 
 window.deleteLayers = function(element) {
   if(confirm('Delete all current layers?'))
     document.dispatchEvent(new Event('deleteLayers'));
+}
+
+window.onBrushBlendChange = function(element) {
+  document.dispatchEvent(new CustomEvent('brushBlend', {detail: element.value}));
+}
+
+window.requestCanvasFlip = ( ) => {
+  document.dispatchEvent(new Event('flipCanvas'))
+}
+
+window.presentManual = ( ) => {
+  $('iframe').css('display', 'block');
 }

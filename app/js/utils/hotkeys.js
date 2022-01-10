@@ -7,27 +7,26 @@ export default function( ) {
 
 const useKey = function(event) {
   keys[event.key] = event.type == 'keydown';
-  handleBrushType(document.querySelector('select[name="brushType"]'));
-  handleBrushSize(document.querySelector('input[name="brushSizeNumber"]'));
+  if(event.key == "e") selectBrush(0);
+  else if(event.key == "P") selectBrush(2);
+  else if (event.key == "p") selectBrush(1);
+  else if (event.key.toLowerCase( ) == "i") selectBrush(3);
+  else if (event.key == "[") changeBrushSize( -10 );
+  else if (event.key == "]") changeBrushSize( +10 );
+  else if (event.key == "{") changeBrushSize( -50 );
+  else if (event.key == "}") changeBrushSize( +50 );
+  else if (event.key == "N" && !keys["N"]) requestNewLayer( );
+  else if (event.key == "h" && !keys["h"]) requestCanvasFlip( );
 }
 
-const handleBrushType = element => {
-  let value;
-  if(keys["0"]) value = 0;
-  else if (keys["1"]) value = 1;
-  else if (keys["2"]) value = 2;
-  //
-  if(value === undefined) return;
-  element.value = value;
-  element.dispatchEvent(new Event('change'));
+const changeBrushSize = value => {
+  value += Number(document.querySelector('input[name="brushSizeNumber"]').value);
+  value = value < brushMin ? brushMax : value > brushMax ? brushMax : value;
+  document.querySelector('input[name="brushSizeNumber"]').value = value;
+  document.querySelector('input[name="brushSizeNumber"]').dispatchEvent(new Event("change"));
 }
 
-const handleBrushSize = element => {
-  let value = 0;
-  if(keys["["]) value = -10;
-  else if (keys["]"]) value = 10;
-  let appliedNumber = Number(element.value) + value;
-  appliedNumber = appliedNumber < brushMin ? brushMin : appliedNumber > brushMax ? brushMax : appliedNumber;
-  element.value = appliedNumber;
-  element.dispatchEvent(new Event('change'));
+const selectBrush = value => {
+  document.querySelector('select[name="brushType"]').value = value;
+  document.querySelector('select[name="brushType"]').dispatchEvent(new Event('change'));
 }

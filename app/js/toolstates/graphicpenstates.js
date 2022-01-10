@@ -4,26 +4,18 @@ const GraphicPenDownState = function(pen) {
 }
 
 GraphicPenDownState.prototype.enterState = function(config) {
-  this.pen.pointLog = [ ];
+  this.pen.pointLog = [];
+  document.dispatchEvent(new Event('beginDraw'));
 }
 
 GraphicPenDownState.prototype.exitState = function(config) {
-  this.pen.machine.dispatchPath('path', {
-    path: this.pointLog,
-    size: this.pen.size,
-    blend: this.pen.blendMode
-  });
+  this.pen.machine.dispatchPath('path', this.pen);
 }
 
-GraphicPenDownState.prototype.update = function(event){
+GraphicPenDownState.prototype.update = function(config){
   this.pen.pointLog.push(event.detail.pos);
-  this.pen.machine.dispatchPath('plot', {
-    path: this.pointLog,
-    size: this.pen.size,
-    blend: this.pen.blendMode
-  });
+  this.pen.machine.dispatchPath('plot', this.pen);
 }
-
 
 ///////////////////////////////////////////////////////////////////////////
 /// Up State
@@ -34,14 +26,14 @@ const GraphicPenUpState = function(pen) {
 }
 
 GraphicPenUpState.prototype.enterState = function(config) {
-  this.pen.pointLog = [ ];
+  this.pen.pointLog = [];
 }
 
-GraphicPenUpState.prototype.exitState = function(context) {
-  this.pen.pointLog = [ ];
+GraphicPenUpState.prototype.exitState = function(config) {
+  this.pen.pointLog = [];
 }
 
-GraphicPenUpState.prototype.update = function(position) {
+GraphicPenUpState.prototype.update = function(config) {
 
 }
 

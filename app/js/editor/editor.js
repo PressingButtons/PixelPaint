@@ -4,6 +4,7 @@ let currentLayer = null;
 
 const init = ( ) => {
   toolkit = new ToolKit( );
+  window.toolSize = 10;
   setListeners( );
 }
 
@@ -16,12 +17,19 @@ const setListeners = ( ) => {
   document.addEventListener('brushSizeChange', listeners.onBrushSizeChange);
   document.addEventListener('brushOpacityChange', listeners.onBrushOpacityChange);
   document.addEventListener('brushType', listeners.onBrushTypeChange);
+  document.addEventListener('brushBlend', listeners.onBrushBlendChange);
 }
 
 const listeners = { };
 
+listeners.onBrushBlendChange = event => {
+  toolkit.currentTool.blendMode = event.detail;
+}
+
 listeners.onBrushSizeChange = event => {
+  if(toolkit.currentTool.noResize) return;
   toolkit.currentTool.size = event.detail;
+  window.toolSize = toolkit.currentTool.size;
 }
 
 listeners.onBrushOpacityChange = event => {
@@ -30,6 +38,7 @@ listeners.onBrushOpacityChange = event => {
 
 listeners.onBrushTypeChange = event => {
   toolkit.selectTool(event.detail);
+  window.toolSize = toolkit.currentTool.size;
 }
 
 listeners.onColorValue = event => {

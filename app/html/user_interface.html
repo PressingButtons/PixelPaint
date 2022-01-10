@@ -1,5 +1,13 @@
 <div class="flex grow col">
 
+  <section>
+    <h1>Info</h1>
+    <div class="icon" onclick="presentManual( )">
+      <img src="../images/icons8-book-64.png" alt="The Book">
+      <p>The Manual</p>
+    </div>
+  </section>
+
   <!--
     Canvas Dimensions
   -->
@@ -8,11 +16,11 @@
 
     <div class="flex spaced">
       <p>Width</p>
-      <input type="text" name="canvasWidth" value="2400" autocomplete="off" pattern="[0-9]{2,4}">
+      <input type="text" name="canvasWidth" value="1200" autocomplete="off" pattern="[0-9]{2,4}">
     </div>
     <div class="flex spaced">
       <p>height</p>
-      <input type="text" name="canvasHeight" value="3500" autocomplete="off" pattern="[0-9]{2,4}">
+      <input type="text" name="canvasHeight" value="1750" autocomplete="off" pattern="[0-9]{2,4}">
     </div>
     <button type="button" name="canvasDimBtn" onclick="canvasUpdateDim( )">Update</button>
 
@@ -23,7 +31,7 @@
     Brush Tool
   -->
   <section>
-    <h1> Brush Tool</h1>
+    <h1>Tool</h1>
 
     <div class="flex">
       <!-- brush type -->
@@ -32,15 +40,21 @@
           <div class="icon"><img src="../images/icons8-erase-64.png" alt="Pencil"><p>Pen</p></div>
           <div class="icon selected"><img src="../images/icons8-pencil-64.png" alt="Pencil"><p>Pencil</p></div>
           <div class="icon"><img src="../images/icons8-pen-64.png" alt="Pencil"><p>Pen</p></div>
+          <div class="icon"><img src="../images/icons8-dropper-64.png" alt="Color Sample"><p>Color Sample</p></div>
         </div>
         <select class="" name="brushType" onchange="onBrushTypeChange(this)">
           <option value="1">Pencil</option>
           <option value="2">Pen</option>
           <option value="0">Eraser</option>
+          <option value="3">Color Sample</option>
         </select>
       </div>
+    </div>
+
+    <div class="flex">
+      <p>Blend Mode</p>
       <!-- brush blend -->
-      <select class="" name="brushBlend" onchnage="onBrushBlendChange(this);">
+      <select class="" name="brushBlend" onchange="onBrushBlendChange(this);">
         <option value="source-over">Normal</option>
         <option value="darken">Darken</option>
         <option value="multiply">Multiply</option>
@@ -60,11 +74,12 @@
       </select>
     </div>
 
-
     <div class="flex padded">
       <p>Size</p>
       <div class="sliderGroup">
-        <input type="range" name="brushSizeSlider" value="10" min="1" max="2000" onchange="onBrushSizeChange(this);">
+        <div class="sliderBox">
+          <input type="range" name="brushSizeSlider" value="10" min="1" max="2000" onchange="onBrushSizeChange(this);">
+        </div>
         <input type="number" name="brushSizeNumber" value="10" min="1" max="2000" onchange="onBrushSizeChange(this);">
       </div>
     </div>
@@ -72,10 +87,13 @@
     <div class="flex padded">
       <p>Opacity</p>
       <div class="sliderGroup">
-        <input type="range" name="brushOpacitySlider" value="100" min="1" max="100" onchange="onBrushOpacityChange(this);">
+      <div class="sliderBox">
+        <div class="opacityDesign"><div class="opacityGradient"></div></div>
+          <input type="range" name="brushOpacitySlider" value="100" min="1" max="100" onchange="onBrushOpacityChange(this);">
+        </div>
         <input type="number" name="brushOpacityNumber" value="100" min="1" max="100" onchange="onBrushOpacityChange(this);">
-      </div>
     </div>
+  </div>
 
   </section>
 
@@ -122,8 +140,8 @@
         <option value="luminosity">Luminosity</option>
       </select>
       <!--opacity range -->
-      <div class="opacitySlider flex">
-        <div class="opacityDetail">
+      <div class="sliderGroup">
+        <div class="sliderBox">
           <div class="opacityDesign">
             <div class="opacityGradient"></div>
           </div>

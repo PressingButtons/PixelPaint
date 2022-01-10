@@ -42,9 +42,16 @@ listeners.onLayerClick = function(event, index) {
   $('.pencil', table).removeClass('active');
   $('.pencil', event.currentTarget).addClass('active');
   if(layerTable[index]) {
+    $('#layerTable tr').removeClass('active');
+    layerTable[index].row.classList.add('active');
     document.dispatchEvent(new CustomEvent('layerSelect', {detail: layerTable[index].layer}));
     methods.setLayerData(layerTable[index].layer);
   }
+}
+
+listeners.onLayerDelete = function(id) {
+  layerTable[id].row.remove( );
+  delete layerTable[id];
 }
 
 listeners.onLayerDrag = function(event) {
@@ -67,16 +74,12 @@ listeners.onLayerDrop = function(event) {
   document.dispatchEvent(new CustomEvent('swapLayers', {detail: [ layerTable[id[0]].layer, layerTable[id[1]].layer ]}));
 }
 
-listeners.onMergeLayer = event => {
-  const active = document.querySelector('tr td div.pencil.active').parentElement.parentElement;
-  if(!active) return;
-  active.dispatchEvent(new Event('merge'));
-}
-
 listeners.onNewLayer = event => {
-  const tr = methods.setTableRow(layerTable.num);
-  layerTable[layerTable.num] = {layer: event.detail.layer, row: tr};
-  methods.setRowBinds(tr, layerTable.num);
+  const id = layerTable.num;
+  const tr = methods.setTableRow(id);
+  layerTable[id] = {layer: event.detail.layer, row: tr};
+  event.detail.layer.raster.canvas.addEventListener('delete', ev => listeners.onLayerDelete(id));
+  methods.setRowBinds(tr, id);
   layerTable.num++;
   tr.dispatchEvent(new Event('click'));
 }
@@ -129,8 +132,9 @@ methods.layerMerge = (id) => {
 }
 
 methods.setLayerData = layer => {
-  document.querySelector('input[name="layerOpacityNumber"]').value = layer.raster.canvas.style.opacity * 100;
+  document.querySelector('input[name="layerOpacityNumber"]').value = layer.opacity * 100;
   document.querySelector('input[name="layerOpacityNumber"]').dispatchEvent(new Event('change'));
+  document.querySelector('select[name="layerBlendMode"]').value = layer.blend;
 }
 
 methods.setRowBinds = function(tr, id) {

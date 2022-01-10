@@ -5,16 +5,19 @@ const EraserDownState = function(pen) {
 
 EraserDownState.prototype.enterState = function(config) {
   this.pen.pointLog = [];
+  document.dispatchEvent(new Event('beginDraw'));
 }
 
 EraserDownState.prototype.exitState = function(context) {
-
+  this.pen.pointLog.push(event.detail.pos);
+  this.pen.blendMode = 'destination-out';
+  this.pen.machine.dispatchPath('path', this.pen);
 }
 
 EraserDownState.prototype.update = function(config){
   this.pen.pointLog.push(event.detail.pos);
   this.pen.blendMode = 'destination-out';
-  this.pen.machine.dispatchPath('path', this.pen);
+  this.pen.machine.dispatchPath('plot', this.pen);
 }
 
 ///////////////////////////////////////////////////////////////////////////

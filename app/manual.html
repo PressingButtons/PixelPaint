@@ -17,24 +17,70 @@
       <section>
         <h1>About</h1>
         <p>
-          SimpleSketchJS is a javascript based digital painting application.
-          As the name suggests, the application features a concise toolset for users to create their paintings.
-          However, the plan is to expand the application as the opportunity arises.
-          Thank you for using SimpleSketchJS and enjoy!
+          Welcome to <span class='special'>leSketchJS</span>! An as-you-see-it digital painting application<br>
+          Use this manual to learn the features of this application. Information found here is subject to update.<br>
         </p>
+      </section>
+
+      <section>
+        <h1>The Editor</h1>
         <p>
-          This manual contains information regarding the features of SimpleSketchJS.
+          SimpleSketchJS can essentially be broken down into two sections: The <span class="important">Workspace</span> and the <span class='important'>User Interface</span>.<br>
+          The Workspace is where the art happens! To the lower left you'll find the current zoom level which can be adjusted.<br>
+          The User Interface is where you'll find the tools, page dimensions, layers and color palette.<br>
+          Of course these work in tandem. The minimal design should provide clarity to their uses.
         </p>
+      </section>
+
+      <section>
+        <h1>The Workspace</h1>
+        <p>
+          The Workspace hosts the <span class="important">Draw Space</span> which is the drawable region within the workspace.<br>
+          The Draw Space starts with a transparent background (the checkerbox design). All brush related actions are performed within<br>
+          the Draw Space. Performing a "Mouse Wheel" or "Scroll" action whilst in the workspace will adjust the zoom. <br>
+          Users can also manually adjust the zoom by typing in the desired zoom in the lower left side of the workspace.
+        </p>
+      </section>
+
+      <section>
+        <h1>User Interface</h1>
+        <p>
+          The User Interface hosts all the tools featured in SimpleSketchJS. The UI is divided into several sections
+        </p>
+
+        <section>
+          <h1>Info</h1>
+          <p>
+            The info features only one item which is the <span class="important">Book</span> which brought you here!<br>
+            Click on the book whenever you wish to refresh your knowledge on this application.
+          </p>
+        </section>
+
+        <section>
+          <h1>Canvas Size</h1>
+          <p>
+            As the name suggests, users will be able ot resize the canvas they are working with.<br>
+            However, performing this action will <span class='warning'>clear all current layers</span>
+          </p>
+        </section>
+
+        <section>
+          <h1>Tool</h1>
+          <p>
+            Tool section hosts the various tool that can be used to interact with the <span class='important'>Draw Space</span>.<br>
+            The information here is contextual with the tool selected.<br>
+          </p>
+        </section>
+
       </section>
 
       <section>
         <h1>Tools</h1>
         <p>
-          On the far left of the application is the Tool Pane.<br>
-          Right beside is the application interface which includes a tool context menu.<br>
-          Below are descriptions for each tool and their behavior.
+
         </p>
         <table>
+          <!--
           <tr id='brush'>
             <td><p>Brush</p></td>
             <td><img src="./images/icons8-brush-60.png" alt=""></td>
@@ -46,6 +92,7 @@
               </p>
             </td>
           </tr>
+        -->
           <tr id='eraser'>
             <td><p>Eraser</p></td>
             <td><img src="./images/icons8-erase-64.png" alt=""></td>
@@ -83,42 +130,32 @@
               </p>
             </td>
           </tr>
-          <tr id='zoom'>
-            <td><p>Magnify</p></td>
-            <td><img src="./images/icons8-search-48.png" alt=""></td>
-            <td>
-              <p>
-                <span>Currently not implemented</span><br>
-                Zoom's into a canvas based on the tool position. Holding Ctrl zoom's out.
-              </p>
-            </td>
-          </tr>
         </table>
       </section>
 
       <section id="Palette">
         <h1>Palette</h1>
         <p>
-          On the left side of the application is a series of boxes intended for use as the user's palette.</br>
-          Single clicking the box select that color for use. Doubling clicking will allow the user to customize the color.<br>
-          A new panel will appear allowing the user to set the RGB values of the new color.<br>
-          Once complete, the new color will be selected.
+          The palette hosts the <span class="important">ColorPicker</span> and the saved color set.<br>
+          The ColorPicker is an external app created by iro. Find the library here <a href="https://iro.js.org/introduction.html">iro.js.org</a>.<br>
+          To bind a color click one the adjacent boxes and then adjust the color form the colorSphere.<br>
+          The current color selected on the ColorWheel will be your brush color.
         </p>
       </section>
 
       <section id='hotkeys'>
         <h1>Hot Keys</h1>
         <table>
-          <tr><td><p>b</p></td><td><p>Selects the <a href="#brush">Brush</a> tool.</p></td></tr>
           <tr><td><p>e</p></td><td><p>Selects the <a href="#eraser">Eraser</a> tool.</p></td></tr>
           <tr><td><p>i</p></td><td><p>Selects the <a href="#eyedropper">Eye Dropper</a> tool.</p></td></tr>
           <tr><td><p>p</p></td><td><p>Selects the <a href="#pen">Pen</a> tool.</p></td></tr>
           <tr><td><p>P</p></td><td><p>Selects the <a href="#pencil">Pencil</a> tool.</p></td></tr>
-          <tr><td><p>z</p></td><td><p>Selects the <a href="#zoom">Zoom</a> tool.</p></td></tr>
-          <tr><td><p>[</p></td><td><p>Decreases the size of the active stroke based tool.</p></td></tr>
-          <tr><td><p>]</p></td><td><p>Increases the size of the active stroke based tool.</p></td></tr>
-          <tr><td><p>{</p></td><td><p>Decreases the opacity of the current stroke based tool by 10.</td></tr>
-          <tr><td><p>}</p></td><td><p>Increases the opacity of the current stroke based tool by 10.</p></td></tr>
+          <tr><td><p>[</p></td><td><p>Decreases the size of the active stroke based tool by 10.</p></td></tr>
+          <tr><td><p>]</p></td><td><p>Increases the size of the active stroke based tool by 10.</p></td></tr>
+          <tr><td><p>{</p></td><td><p>Decreases the size of the active stroke based tool by 50.</p></td></tr>
+          <tr><td><p>}</p></td><td><p>Increases the size of the active stroke based tool by 50.</p></td></tr>
+          <tr><td><p>shift + N</p></td><td><p>Shortcut to create a new layer.</p></td></tr>
+          <tr><td><p>H</p></td><td><p>Flip canvas horizontally</p></td></tr>
         </table>
       </section>
 

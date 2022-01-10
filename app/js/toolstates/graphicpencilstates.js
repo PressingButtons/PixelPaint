@@ -5,6 +5,7 @@ const GraphicPencilDownState = function(pen) {
 
 GraphicPencilDownState.prototype.enterState = function(config) {
   this.pen.pointLog = [];
+  document.dispatchEvent(new Event('beginDraw'));
 }
 
 GraphicPencilDownState.prototype.exitState = function(config) {

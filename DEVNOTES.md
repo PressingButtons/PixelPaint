@@ -39,3 +39,11 @@ Future plans for creating brushes of various shapes and possibly for custom brus
 It's been quite some time since the last update. In that hiatus I've worked on other projects and learned some new technologies.
 For the purpose of this application, I'm simplifying it. Drawing will be handled by cavnas2d instead of webgl.
 I've also removed express and have instead opted for a simple server for hosting responsibilities.
+
+#1/9/2022
+
+##Massive Overhaul.
+
+Rework of the interface and transition to a more event driven design. The new Look is a bit sleeker I think.
+plenty of new features such as layers and the ability to flip the canvas horizontally. Opacities and blend modes
+work even better than before. Users can zoom in on their drawings though the process still needs adjustments.

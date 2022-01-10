@@ -13,13 +13,13 @@ Object.defineProperties(GraphicTool.prototype, {
   UP: {value: 0},
 })
 
-GraphicTool.prototype.switchState = function(switchID) {
-  if(this.currentState) this.currentState.exitState( );
-  this.states[switchID].enterState( );
+GraphicTool.prototype.switchState = function(switchID, event) {
+  if(this.currentState) this.currentState.exitState(event);
+  this.states[switchID].enterState(event);
   this.currentState = this.states[switchID];
 }
 
-GraphicTool.prototype.update = function(event) {
+GraphicTool.prototype.update = function(event, config) {
   this.currentState.update(event);
 }
 

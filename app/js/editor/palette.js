@@ -37,6 +37,10 @@ const onColorChange = function(color) {
   dispatchColorEvent(color.hexString);
 }
 
+const onSetColor = function( event ) {
+  colorPicker.color.hexString = event.detail;
+}
+
 const dispatchColorEvent = function(color) {
   document.dispatchEvent(new CustomEvent('colorValue', {
     detail: color
@@ -49,5 +53,6 @@ const dispatchColorEvent = function(color) {
 export default function( ) {
   colorPicker = new iro.ColorPicker('#colorPicker', {width: 200});
   colorPicker.on('color:change', onColorChange);
+  document.addEventListener('setColor', onSetColor);
   createPalette( );
 }

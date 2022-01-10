@@ -41,4 +41,13 @@ const appendChildren = (query, collection) => {
   }
 }
 
+const bindIframe = event => {
+  const frame = event.currentTarget;
+  frame.contentDocument.addEventListener('click', ev => {
+    frame.style.display = "none";
+  })
+}
+
+document.querySelector('iframe').addEventListener('load', bindIframe)
+
 $(document).ready(onReady);
